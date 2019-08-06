@@ -11,7 +11,7 @@ class Solution extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:3030/solution')
+    axios.get('http://localhost:5000/solution')
     .then(solution => this.setState({solution : solution.data}))
   }
 

@@ -1,15 +1,14 @@
 import React, {Fragment} from 'react';
 import styled from 'styled-components'
 
-function App() {
+function Header() {
   return (
     <HeaderWrapper>
-
     </HeaderWrapper>
   );
 }
 
-export default App;
+export default Header;
 
 const HeaderWrapper = styled.div`
   grid-row: 1;
