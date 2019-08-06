@@ -1,14 +1,12 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const bodyParser = require('body-parser');
+const routes = require('./routes/routes.js');
+const app = express();
 const PORT = process.env.PORT || 8080;
 
-const colorService = require('./services/colorService');
-const solution = new colorService();
-solution.getSolution(8);
+app.use(bodyParser.json());
 
-app.get('/',(req, res) => {
-  res.send(solution.getSolution(8));
-});
+routes(app);
 
 app.listen(PORT, () => {
   console.log(`listening on PORT: ${PORT}`)
