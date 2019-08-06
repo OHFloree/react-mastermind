@@ -7,7 +7,8 @@ class PinPlacement extends Component {
     super();
     this.state = {
       placement : ['#000000','#000000','#000000','#000000'],
-      colorPool: []
+      colorPool: [],
+      currentPin: 0
     }
   }
 
@@ -22,18 +23,25 @@ class PinPlacement extends Component {
 
   handlePinSelection = (e) => {
     e.preventDefault();
+    this.setState({currentPin: e.target.id})
+  }
+
+  handleColorSelection = (e) => {
+    e.preventDefault();
+    this.state.placement[this.state.currentPin] = e.target.value;
+    console.log(this.state.placement);
   }
 
   render() {
     return (
       <PlacementContainer>
-        {this.state.placement.map((color, index) => {
-          return <SelectionPin onClick={this.handlePinSelection} key={index} bgColor={color}></SelectionPin>
+        {this.state.placement.map((color, i) => {
+          return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} bgColor={color}></SelectionPin>
         })}
         <Submit type="submit" onClick={this.handleSubmit}>OK</Submit>
         <ColorSelection>
           {this.state.colorPool.map((color, index) => {
-            return <ColorSelector key={index} bgColor={color}></ColorSelector>
+            return <ColorSelector onClick={this.handleColorSelection} key={index} value={color}></ColorSelector>
           })}
         </ColorSelection>
       </PlacementContainer>
@@ -84,5 +92,5 @@ const ColorSelector = styled.button`
   margin: auto 10px;
   border: 2px solid white;
   border-radius: 50%;
-  background-color: ${props => props.bgColor};
+  background-color: ${props => props.value};
 `
