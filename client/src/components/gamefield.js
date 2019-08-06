@@ -15,6 +15,7 @@ function GameField() {
       <Row />
       <Row />
       <Row />
+      <Row />
     </FieldWrapper>
   );
 }
