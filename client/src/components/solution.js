@@ -6,7 +6,7 @@ class Solution extends Component {
   constructor() {
     super();
     this.state = {
-      solution: []
+      solution: [,,,,]
     }
   }
 
@@ -16,11 +16,10 @@ class Solution extends Component {
   }
 
   render() {
-    console.log(this.state.solution)
     return(
       <SolutionWrapper>
         {this.state.solution.map((color, index) => {
-          return <SolutionPin key={index} color={color}></SolutionPin>
+            return <SolutionPin key={index} bgColor={color || 'black'}></SolutionPin>
         })}
       </SolutionWrapper>
     );
@@ -43,8 +42,11 @@ const SolutionWrapper = styled.div`
 `
 
 const SolutionPin = styled.div`
-  line-height: 60px;
-  background-color: ${props => props.color};
-  font-size: 20px;
-  text-align: center;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  margin: 5px auto;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: ${props => props.bgColor};
 `

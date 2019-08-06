@@ -2,14 +2,14 @@ class ColorService {
   constructor() {
     this.solution = [];
     this.colorPool = [
-      "FF0000",
-      "00FF00",
-      "0000FF",
-      "FFFF00",
-      "00FFFF",
-      "FF00FF",
-      "FF9B00",
-      "216621"
+      "#FF0000",
+      "#00FF00",
+      "#0000FF",
+      "#FFFF00",
+      "#00FFFF",
+      "#FF00FF",
+      "#FF9B00",
+      "#216621"
     ];
   }
   getSolution(n) {

@@ -12,7 +12,7 @@ const colorService = require('./services/colorService')
 const colors = new colorService;
 const solution = colors.getSolution(8);
 
-won = true;
+var won = false;
 
 app.get('/solution', (req,res) => {
   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
@@ -20,7 +20,7 @@ app.get('/solution', (req,res) => {
     res.json(solution)
   }
   else {
-    res.json(['?','?','?','?'])
+    res.json([,,,,])
   }
 })
 
