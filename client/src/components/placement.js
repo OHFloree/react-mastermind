@@ -19,6 +19,10 @@ class PinPlacement extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+    axios.post('http://localhost:5000/placement', {
+    firstName: 'Fred',
+    lastName: 'Flintstone'
+  })
   }
 
   handlePinSelection = (e) => {
@@ -34,16 +38,16 @@ class PinPlacement extends Component {
 
   render() {
     return (
-      <PlacementContainer>
+      <PlacementContainer onSubmit={this.handleSubmit}>
         {this.state.placement.map((color, i) => {
           return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} bgColor={color}></SelectionPin>
         })}
-        <Submit type="submit" onClick={this.handleSubmit}>OK</Submit>
         <ColorSelection>
           {this.state.colorPool.map((color, index) => {
             return <ColorSelector onClick={this.handleColorSelection} key={index} value={color}></ColorSelector>
           })}
         </ColorSelection>
+        <Submit type="submit">OK</Submit>
       </PlacementContainer>
     );
   }
