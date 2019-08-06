@@ -1,20 +1,30 @@
-import React, {useState,useEffect} from 'react';
+import React, {Component} from 'react';
 import styled from 'styled-components';
+import axios from 'axios';
 
-function Solution() {
-  const [solution, setSolution] = useState(['?','?','?','?']);
+class Solution extends Component {
+  constructor() {
+    super();
+    this.state = {
+      solution: []
+    }
+  }
 
-  useEffect(() => {
-    
-  });
+  componentDidMount() {
+    axios.get('http://localhost:3030/solution')
+    .then(solution => this.setState({solution : solution.data}))
+  }
 
-  return(
-    <SolutionWrapper>
-      {solution.map((color, index) => {
-        return <SolutionSpan key={index}>{color}</SolutionSpan>
-      })}
-    </SolutionWrapper>
-  );
+  render() {
+    console.log(this.state.solution)
+    return(
+      <SolutionWrapper>
+        {this.state.solution.map((color, index) => {
+          return <SolutionPin key={index} color={color}></SolutionPin>
+        })}
+      </SolutionWrapper>
+    );
+}
 }
 
 export default Solution
@@ -32,9 +42,9 @@ const SolutionWrapper = styled.div`
   grid-template-columns: repeat(4, 1fr);
 `
 
-const SolutionSpan = styled.span`
+const SolutionPin = styled.div`
   line-height: 60px;
-  color: white;
+  background-color: ${props => props.color};
   font-size: 20px;
   text-align: center;
 `
