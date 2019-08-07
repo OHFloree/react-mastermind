@@ -5,6 +5,15 @@ class FeedbackService {
     this.feedback = [];
   }
 
+  won(placement) {
+    if (this.solution == placement) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
   checkPlacement(placement) {
     let checked = true;
     for(let i = 0; i<placement.length;i++) {
@@ -22,20 +31,20 @@ class FeedbackService {
   }
 
   getFeedback(placement) {
-    let solution = this.solution;
     let correctColors = 0;
     let correctPositions = 0;
     for(let i=0; i<placement.length; i++) {
-      if(this.solution.includes(placement[i])) {
-        if(this.solution.indexOf(placement[i]) == i) {
-          correctPositions++;
-        }
-        else {
-          correctColors++;
-        }
+      if(this.solution.indexOf(placement[i]) == i) {
+        correctPositions ++;
       }
     }
-    this.feedback.push([correctPositions, correctColors])
+    for(let i=0; i<placement.length; i++) {
+      if(this.solution.includes(placement[i])) {
+        correctColors ++;
+      }
+    }
+    correctColors = correctColors - correctPositions;
+    this.feedback.push([correctPositions,correctColors])
     return this.feedback
   }
 }

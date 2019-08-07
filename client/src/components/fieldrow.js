@@ -3,9 +3,6 @@ import styled from 'styled-components'
 
 class FieldRow extends Component {
 
-  componentDidMount() {
-   console.log(this.props);
-  }
   render() {
     var redPins = [];
     var whitePins = [];
