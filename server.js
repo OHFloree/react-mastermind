@@ -1,25 +1,40 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var session = require('express-session');
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 const PORT = process.env.PORT || 5000;
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", 'http://localhost:3000'); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-const colorService = require('./services/colorService')
-const colors = new colorService;
-const solution = colors.getSolution(8);
-const colorPool = colors.getColors();
 
-var won = false;
-
-app.get('/', (req,res) => {
+server.listen(PORT, () => {
+  console.log(`listening on PORT: ${PORT}`);
 })
 
+
+io.on('connection', (socket) => {
+  console.log(`player connected: ${socket.id}`);
+
+  const colorService = require('./services/colorService')
+  const colors = new colorService;
+  const solution = colors.getSolution(8);
+  const colorPool = colors.getColors();
+
+  const feedbackService = require('./services/feedbackService')
+  const feedback = new feedbackService(solution);
+
+  socket.emit('colors', {colorPool});
+  socket.on('placement', (placement) => {
+    let attempts = feedback.getAttempts(placement.placement);
+    socket.emit('attempts', {attempts});
+  })
+})
+
+/*
+
+var won = false;
+var attempts;
+
+//SOLUTION
 app.get('/solution', (req,res) => {
   if(won) {
     res.json(solution)
@@ -29,14 +44,14 @@ app.get('/solution', (req,res) => {
   }
 })
 
+//COLORS
 app.get('/colors', (req, res) => {
   res.json(colorPool)
 })
 
-app.post('/placement', urlencodedParser, (req,res) => {
-  console.log(req.body);
-})
+//PLACEMENT
+app.post('/placement', (req,res) => {
+  let placement = req.body.placement;
+  attempts = feedback.getAttempts(placement);
 
-app.listen(PORT, () => {
-  console.log(`listening on PORT: ${PORT}`)
-})
+})*/
