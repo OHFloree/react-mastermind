@@ -44,7 +44,7 @@ class FeedbackService {
       }
     }
     correctColors = correctColors - correctPositions;
-    this.feedback.push([correctColors,correctPositions])
+    this.feedback.push([correctPositions,correctColors])
     return this.feedback
   }
 }
