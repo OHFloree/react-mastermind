@@ -81,12 +81,6 @@ const ColorPin = styled.div`
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.color};
-  @media (min-width: 400px) {
-  }
-  @media (min-width: 600px) {
-  }
-  @media (min-width: 1000px) {
-  }
 `
 
 const FbPin = styled.div`
