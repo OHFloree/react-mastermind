@@ -20,7 +20,6 @@ class FieldRow extends Component {
             return <ColorPin key={i} color={color} />
           })}
         </ColorContainer>
-        <RowSpacing />
         <FbContainer>
           {redPins}
           {whitePins}
@@ -35,7 +34,7 @@ export default FieldRow;
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr) 0.5fr 1fr;
 `
 
 
@@ -46,12 +45,25 @@ const FbContainer = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
-
-`
-
-const RowSpacing = styled.div`
-  grid-column: 5;
-  padding-top: 100%;
+  justify-items: center;
+  align-items: center;
+  ::before {
+    content: '';
+    width: 0;
+    padding-top: 100%;
+  }
+  @media (min-width: 400px) {
+    width: 80%;
+  }
+  @media (min-width: 600px) {
+    width: 70%;
+  }
+  @media (min-width: 1000px) {
+    width: 50%;
+  }
+  @media (min-width: 1500px) {
+    width: 30%;
+  }
 `
 
 const ColorContainer = styled.div`
@@ -59,22 +71,21 @@ const ColorContainer = styled.div`
   background-color: rgba(255, 255, 255, 0.3);
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  align-items: center;
 `
 
 const ColorPin = styled.div`
-  width: 60%;
-  height: 60%;
-  margin: auto;
-  margin: calc(20% -2px);
+  width: 36px;
+  height: 36px;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.color};
 `
 
 const FbPin = styled.div`
-  width: 80%;
-  height: 80%;
-  margin: 10%;
+  width: 50%;
+  height: 50%;
   border-radius: 50%;
   background-color: white;
 `

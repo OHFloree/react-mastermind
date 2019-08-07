@@ -69,10 +69,11 @@ export default PinPlacement;
 
 const PlacementContainer = styled.form`
   grid-row: 4;
-  margin: 0 2%;
+  padding: 0 2%;
   border-top: 5px solid white;
+  background-color: rgba(255, 255, 255, 0.3);
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(4, 1fr) 0.5fr 1fr;
   grid-template-rows: 1fr 1fr;
 `
 const SelectionPin = styled.button`
@@ -99,6 +100,7 @@ const ColorSelection = styled.div`
   grid-row: 2;
   grid-column: 1 / 7;
   overflow-x: scroll;
+  overflow-y: hidden;
   display: ${props => props.display};
   grid-template-columns: repeat(8, 1fr);
 `
