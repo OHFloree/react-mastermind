@@ -26,15 +26,15 @@ class FeedbackService {
     let correctColors = 0;
     let correctPositions = 0;
     for(let i=0; i<placement.length; i++) {
+      if(this.solution.indexOf(placement[i]) == i) {
+        correctPositions ++;
+      }
       if(this.solution.includes(placement[i])) {
-        if(this.solution.indexOf(placement[i]) == i) {
-          correctPositions++;
-        }
-        else {
-          correctColors++;
-        }
+        correctColors ++;
       }
     }
+    correctColors = correctColors - correctPositions
+    console.log(correctPositions, correctColors);
     this.feedback.push([correctPositions, correctColors])
     return this.feedback
   }

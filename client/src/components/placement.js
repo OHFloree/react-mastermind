@@ -8,6 +8,7 @@ class PinPlacement extends Component {
     this.state = {
       placement : ['','','',''],
       colorPool: [],
+      display: false,
       gameover: false ,
       currentPin: 0
     }
@@ -36,7 +37,7 @@ class PinPlacement extends Component {
 
   handlePinSelection = (e) => {
     e.preventDefault();
-    this.setState({currentPin: e.target.id})
+    this.setState({currentPin: e.target.id, display: !this.state.display})
   }
 
   handleColorSelection = (e) => {
@@ -50,7 +51,7 @@ class PinPlacement extends Component {
         {this.state.placement.map((color, i) => {
           return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} bgColor={color}></SelectionPin>
         })}
-        <ColorSelection>
+        <ColorSelection display= {this.state.display ? 'grid' : 'none'}>
           {this.state.colorPool.map((color, index) => {
             return <ColorSelector onClick={this.handleColorSelection} key={index} value={color}></ColorSelector>
           })}
@@ -96,7 +97,7 @@ const ColorSelection = styled.div`
   grid-row: 2;
   grid-column: 1 / 7;
   overflow-x: scroll;
-  display: grid;
+  display: ${props => props.display};
   grid-template-columns: repeat(8, 1fr);
 `
 const ColorSelector = styled.button`
