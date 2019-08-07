@@ -1,24 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react';
+import SocketContext from '../context/socket-context.js'
 import styled from 'styled-components';
+import FieldRow from './fieldrow.js';
 
-function GameField() {
-  return(
+class GameField extends Component {
+  constructor() {
+    super();
+    this.state = {
+      attempts : [],
+      feedback : []
+    }
+  }
+
+  componentDidMount() {
+    this.context.on('feedback', (feedback) => {
+    this.setState({attempts: feedback.attempts, feedback: feedback.feedback})
+    })
+  }
+
+  render() {
+    return (
     <FieldWrapper>
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
-      <Row />
+      {this.state.attempts.map((attempts, i) => {
+        return <FieldRow key={i} attempts={this.state.attempts[i]} feedback={this.state.feedback[i]} />
+      })}
     </FieldWrapper>
-  );
+    );
+  }
 }
+GameField.contextType = SocketContext
 
 export default GameField
 
@@ -29,9 +39,4 @@ const FieldWrapper = styled.div`
   display: grid;
   grid-template-rows: repeat(12, 1fr);
   grid-row-gap: 2%;
-`
-
-const Row = styled.div`
-  height: 60px;
-  background-color: rgba(255, 255, 255, 0.3);
 `

@@ -31,7 +31,8 @@ io.on('connection', (socket) => {
       counter +=1;
       if (counter<12) {
         let attempts = feedback.getAttempts(placement.placement);
-        socket.emit('attempts', {attempts});
+        let feedbackObject = feedback.getFeedback(placement.placement);
+        socket.emit('feedback', {attempts, feedback: feedbackObject});
       }
       else {
         gameover = true;
@@ -45,30 +46,3 @@ io.on('connection', (socket) => {
     }
   })
 })
-
-/*
-
-var won = false;
-var attempts;
-
-//SOLUTION
-app.get('/solution', (req,res) => {
-  if(won) {
-    res.json(solution)
-  }
-  else {
-    res.json([,,,,])
-  }
-})
-
-//COLORS
-app.get('/colors', (req, res) => {
-  res.json(colorPool)
-})
-
-//PLACEMENT
-app.post('/placement', (req,res) => {
-  let placement = req.body.placement;
-  attempts = feedback.getAttempts(placement);
-
-})*/
