@@ -7,7 +7,7 @@ import GameField from './components/gamefield.js'
 import PinPlacement from './components/placement'
 import Solution from './components/solution.js'
 
-const socket = io('http://localhost:5000')
+const socket = io('127.0.0.1:5000')
 
 function App() {
   return (
