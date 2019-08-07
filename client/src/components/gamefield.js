@@ -22,7 +22,7 @@ class GameField extends Component {
     return (
     <FieldWrapper>
       {this.state.attempts.map((attempts, i) => {
-        return <FieldRow key={i} attempts={this.state.attempts} feedback={this.state.feedback} />
+        return <FieldRow key={i} attempts={this.state.attempts[i]} feedback={this.state.feedback} />
       })}
     </FieldWrapper>
     );
