@@ -31,20 +31,25 @@ class FeedbackService {
   }
 
   getFeedback(placement) {
-    let correctColors = 0;
-    let correctPositions = 0;
-    for(let i=0; i<placement.length; i++) {
-      if(this.solution.indexOf(placement[i]) == i) {
-        correctPositions ++;
-      }
-    }
+    let correctColors = [];
+    let correctPositions = [];
     for(let i=0; i<placement.length; i++) {
       if(this.solution.includes(placement[i])) {
-        correctColors ++;
+        correctColors.push(placement[i]);
       }
     }
-    correctColors = correctColors - correctPositions;
-    this.feedback.push([correctPositions,correctColors])
+    for(let i=0;i<correctColors.length;i++) {
+      for(let j=i;j<correctColors.length;j++) {
+        console.log(i, j);
+      }
+
+    }
+    this.feedback.push([correctPositions.length,correctColors.length])
+    console.log(`
+      solution: ${this.solution}
+      placement: ${placement}
+      ${correctPositions}, ${correctColors}
+      `);
     return this.feedback
   }
 }
