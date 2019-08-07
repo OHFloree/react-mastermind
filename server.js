@@ -8,7 +8,10 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+
 
 const colorService = require('./services/colorService')
 const colors = new colorService;
@@ -16,10 +19,12 @@ const solution = colors.getSolution(8);
 const colorPool = colors.getColors();
 
 var won = false;
+var placement= [];
 
 app.get('/', (req,res) => {
 })
 
+//SOLUTION
 app.get('/solution', (req,res) => {
   if(won) {
     res.json(solution)
@@ -29,12 +34,14 @@ app.get('/solution', (req,res) => {
   }
 })
 
+//COLORS
 app.get('/colors', (req, res) => {
   res.json(colorPool)
 })
 
-app.post('/placement', urlencodedParser, (req,res) => {
-  console.log(req.body);
+//PLACEMENT
+app.post('/placement', (req,res) => {
+  placement = req.body.placement
 })
 
 app.listen(PORT, () => {
