@@ -5,6 +5,17 @@ class FeedbackService {
     this.correctPositions = 0;
     this.correctColors = 0;
   }
+
+  checkPlacement(placement) {
+    let checked = true;
+    for(let i = 0; i<placement.length;i++) {
+      if (placement[i] == '') {
+        checked =  false;
+      }
+    }
+    return checked
+  }
+
   getAttempts(placement) {
     this.attempts.push({placement})
     return this.attempts;
