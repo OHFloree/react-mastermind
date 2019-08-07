@@ -22,20 +22,21 @@ class FeedbackService {
   }
 
   getFeedback(placement) {
-    let solution = this.solution;
     let correctColors = 0;
     let correctPositions = 0;
     for(let i=0; i<placement.length; i++) {
       if(this.solution.indexOf(placement[i]) == i) {
+        console.log(placement[i]);
         correctPositions ++;
       }
+    }
+    for(let i=0; i<placement.length; i++) {
       if(this.solution.includes(placement[i])) {
         correctColors ++;
       }
     }
-    correctColors = correctColors - correctPositions
-    console.log(correctPositions, correctColors);
-    this.feedback.push([correctPositions, correctColors])
+    correctColors = correctColors - correctPositions;
+    this.feedback.push([correctColors,correctPositions])
     return this.feedback
   }
 }
