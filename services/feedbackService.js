@@ -26,7 +26,6 @@ class FeedbackService {
     let correctPositions = 0;
     for(let i=0; i<placement.length; i++) {
       if(this.solution.indexOf(placement[i]) == i) {
-        console.log(placement[i]);
         correctPositions ++;
       }
     }
