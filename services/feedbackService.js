@@ -5,6 +5,15 @@ class FeedbackService {
     this.feedback = [];
   }
 
+  won(placement) {
+    if (this.solution == placement) {
+      return true
+    }
+    else {
+      return false
+    }
+  }
+
   checkPlacement(placement) {
     let checked = true;
     for(let i = 0; i<placement.length;i++) {

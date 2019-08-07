@@ -14,8 +14,6 @@ server.listen(PORT, () => {
 io.on('connection', (socket) => {
   console.log(`player connected: ${socket.id}`);
   let counter = 0;
-
-  var gameover = false;
   const colorService = require('./services/colorService')
   const colors = new colorService;
   const solution = colors.getSolution(8);
@@ -24,6 +22,7 @@ io.on('connection', (socket) => {
   const feedbackService = require('./services/feedbackService')
   const feedback = new feedbackService(solution);
 
+  var gameover = false;
   socket.emit('colors', {colorPool});
   socket.on('placement', (placement) => {
     let checked = feedback.checkPlacement(placement.placement);
@@ -31,6 +30,7 @@ io.on('connection', (socket) => {
       counter +=1;
       if (counter<12) {
         let attempts = feedback.getAttempts(placement.placement);
+        gameover = feedback.won(placement.placement);
         let feedbackObject = feedback.getFeedback(placement.placement);
         socket.emit('feedback', {attempts, feedback: feedbackObject});
       }
