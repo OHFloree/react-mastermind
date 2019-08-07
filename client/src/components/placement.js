@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import io from 'socket.io-client';
 import styled from 'styled-components'
 
 class PinPlacement extends Component {
@@ -13,15 +14,13 @@ class PinPlacement extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/colors')
-    .then(colors => this.setState({colorPool: colors.data}))
+
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     var placement = this.state.placement;
-    axios.post(`http://localhost:5000/placement`, { placement })
   }
 
   handlePinSelection = (e) => {
@@ -32,12 +31,11 @@ class PinPlacement extends Component {
   handleColorSelection = (e) => {
     e.preventDefault();
     this.state.placement[this.state.currentPin] = e.target.value;
-    console.log(this.state.placement);
   }
 
   render() {
     return (
-      <PlacementContainer onSubmit={this.handleSubmit.bind(this)}>
+      <PlacementContainer onSubmit={this.handleSubmit}>
         {this.state.placement.map((color, i) => {
           return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} bgColor={color}></SelectionPin>
         })}

@@ -11,10 +11,9 @@ class Solution extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/solution')
-    .then(solution => this.setState({solution : solution.data}))
-  }
 
+  }
+  
   render() {
     return(
       <SolutionWrapper>

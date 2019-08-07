@@ -1,13 +1,30 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var session = require('express-session');
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 const PORT = process.env.PORT || 5000;
-app.use(function(req, res, next) {
+
+
+/*app.listen(PORT, () => {
+  console.log(`listening on PORT: ${PORT}`)
+})*/
+
+server.listen(PORT, () => {
+  console.log(`listening on PORT: ${PORT}`);
+})
+
+io.on('connection', (socket) => {
+  console.log(`player connected: ${socket.id}`);
+  socket.emit('news', {greeting: 'Hello World'});
+})
+
+/*app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", 'http://localhost:3000'); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -18,11 +35,11 @@ const colors = new colorService;
 const solution = colors.getSolution(8);
 const colorPool = colors.getColors();
 
-var won = false;
-var placement= [];
+const feedbackService = require('./services/feedbackService')
+var feedback = new feedbackService(solution);
 
-app.get('/', (req,res) => {
-})
+var won = false;
+var attempts;
 
 //SOLUTION
 app.get('/solution', (req,res) => {
@@ -41,9 +58,7 @@ app.get('/colors', (req, res) => {
 
 //PLACEMENT
 app.post('/placement', (req,res) => {
-  placement = req.body.placement
-})
+  let placement = req.body.placement;
+  attempts = feedback.getAttempts(placement);
 
-app.listen(PORT, () => {
-  console.log(`listening on PORT: ${PORT}`)
-})
+})*/
