@@ -13,7 +13,9 @@ server.listen(PORT, () => {
 
 io.on('connection', (socket) => {
   console.log(`player connected: ${socket.id}`);
+  let counter = 0;
 
+  var gameover = false;
   const colorService = require('./services/colorService')
   const colors = new colorService;
   const solution = colors.getSolution(8);
@@ -24,8 +26,23 @@ io.on('connection', (socket) => {
 
   socket.emit('colors', {colorPool});
   socket.on('placement', (placement) => {
-    let attempts = feedback.getAttempts(placement.placement);
-    socket.emit('attempts', {attempts});
+    let checked = feedback.checkPlacement(placement.placement);
+    if (checked) {
+      counter +=1;
+      if (counter<12) {
+        let attempts = feedback.getAttempts(placement.placement);
+        socket.emit('attempts', {attempts});
+      }
+      else {
+        gameover = true;
+      }
+      if(gameover) {
+        socket.emit('gameover', {solution, disabled: true})
+      }
+    }
+    else {
+      socket.emit('invalid', 'Please select all four colors')
+    }
   })
 })
 

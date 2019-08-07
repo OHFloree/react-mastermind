@@ -1,14 +1,14 @@
 import React, {Component} from 'react';
 import SocketContext from '../context/socket-context.js'
-import axios from 'axios';
 import styled from 'styled-components'
 
 class PinPlacement extends Component {
   constructor() {
     super();
     this.state = {
-      placement : ['#000000','#000000','#000000','#000000'],
+      placement : ['','','',''],
       colorPool: [],
+      gameover: false ,
       currentPin: 0
     }
   }
@@ -16,6 +16,14 @@ class PinPlacement extends Component {
   componentDidMount() {
     this.context.on('colors', (color) => {
       this.setState({colorPool: color.colorPool})
+    })
+
+    this.context.on('invalid', (text) => {
+      alert(text)
+    })
+
+    this.context.on('gameover', (data) => {
+      this.setState({gameover: data.disabled})
     })
   }
 
@@ -47,7 +55,7 @@ class PinPlacement extends Component {
             return <ColorSelector onClick={this.handleColorSelection} key={index} value={color}></ColorSelector>
           })}
         </ColorSelection>
-        <Submit type="submit">OK</Submit>
+        <Submit type="submit" disabled={this.state.gameover}>OK</Submit>
       </PlacementContainer>
     );
   }
