@@ -1,18 +1,19 @@
 import React, {Component} from 'react';
+import SocketContext from '../context/socket-context.js'
 import styled from 'styled-components';
-import axios from 'axios';
 
 class Solution extends Component {
   constructor() {
     super();
     this.state = {
-      solution: [,,,,]
+      solution: ['','','','']
     }
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/solution')
-    .then(solution => this.setState({solution : solution.data}))
+    this.context.on('gameover', (data) => {
+      this.setState({solution: data.solution})
+    })
   }
 
   render() {
@@ -23,8 +24,9 @@ class Solution extends Component {
         })}
       </SolutionWrapper>
     );
+  }
 }
-}
+Solution.contextType = SocketContext
 
 export default Solution
 

@@ -1,42 +1,48 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-var session = require('express-session');
 const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 const PORT = process.env.PORT || 5000;
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", 'http://localhost:3000'); // update to match the domain you will make the request from
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-const colorService = require('./services/colorService')
-const colors = new colorService;
-const solution = colors.getSolution(8);
-const colorPool = colors.getColors();
 
-var won = false;
-
-app.get('/', (req,res) => {
+server.listen(PORT, () => {
+  console.log(`listening on PORT: ${PORT}`);
 })
 
-app.get('/solution', (req,res) => {
-  if(won) {
-    res.json(solution)
-  }
-  else {
-    res.json([,,,,])
-  }
-})
 
-app.get('/colors', (req, res) => {
-  res.json(colorPool)
-})
+io.on('connection', (socket) => {
+  console.log(`player connected: ${socket.id}`);
+  let counter = 0;
+  const colorService = require('./services/colorService')
+  const colors = new colorService;
+  const solution = colors.getSolution(8);
+  const colorPool = colors.getColors();
 
-app.post('/placement', urlencodedParser, (req,res) => {
-  console.log(req.body);
-})
+  const feedbackService = require('./services/feedbackService')
+  const feedback = new feedbackService(solution);
 
-app.listen(PORT, () => {
-  console.log(`listening on PORT: ${PORT}`)
+  var gameover = false;
+  socket.emit('colors', {colorPool});
+  socket.on('placement', (placement) => {
+    let checked = feedback.checkPlacement(placement.placement);
+    if (checked) {
+      counter +=1;
+      if (counter<12) {
+        let attempts = feedback.getAttempts(placement.placement);
+        gameover = feedback.won(placement.placement);
+        let feedbackObject = feedback.getFeedback(placement.placement);
+        socket.emit('feedback', {attempts, feedback: feedbackObject});
+      }
+      else {
+        gameover = true;
+      }
+      if(gameover) {
+        socket.emit('gameover', {solution, disabled: true})
+      }
+    }
+    else {
+      socket.emit('invalid', 'Please select all four colors')
+    }
+  })
 })
