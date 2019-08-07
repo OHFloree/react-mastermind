@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
+import SocketContext from '../context/socket-context.js'
 import axios from 'axios';
-import io from 'socket.io-client';
 import styled from 'styled-components'
 
 class PinPlacement extends Component {
@@ -14,13 +14,16 @@ class PinPlacement extends Component {
   }
 
   componentDidMount() {
-
+    this.context.on('colors', (color) => {
+      this.setState({colorPool: color.colorPool})
+    })
   }
 
   handleSubmit = (e) => {
     e.preventDefault();
 
     var placement = this.state.placement;
+    this.context.emit('placement', {placement})
   }
 
   handlePinSelection = (e) => {
@@ -49,6 +52,7 @@ class PinPlacement extends Component {
     );
   }
 }
+PinPlacement.contextType = SocketContext
 
 export default PinPlacement;
 

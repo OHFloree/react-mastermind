@@ -13,7 +13,7 @@ class Solution extends Component {
   componentDidMount() {
 
   }
-  
+
   render() {
     return(
       <SolutionWrapper>
