@@ -42,7 +42,9 @@ class PinPlacement extends Component {
 
   handleColorSelection = (e) => {
     e.preventDefault();
-    this.state.placement[this.state.currentPin] = e.target.value;
+    let placement = this.state.placement;
+    placement[this.state.currentPin] = e.target.value
+    this.setState({placement, display: !this.state.display})
   }
 
   render() {
