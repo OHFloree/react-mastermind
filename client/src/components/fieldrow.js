@@ -7,15 +7,26 @@ class FieldRow extends Component {
    console.log(this.props);
   }
   render() {
+    var redPins = [];
+    var whitePins = [];
+    for(let i=0;i<this.props.feedback[0];i++) {
+      redPins.push(<FbPinRed key={'red' + i} />)
+    }
+    for(let i=0;i<this.props.feedback[1];i++) {
+      whitePins.push(<FbPin key={'white' + i} />)
+    }
+
     return (
       <Row>
         <ColorContainer>
-          {this.props.attempts.placement.map((pin, i) => {
-            return <ColorPin key={i} color={pin} />
+          {this.props.attempts.placement.map((color, i) => {
+            return <ColorPin key={i} color={color} />
           })}
         </ColorContainer>
         <RowSpacing />
         <FbContainer>
+          {redPins}
+          {whitePins}
         </FbContainer>
       </Row>
     );
@@ -35,6 +46,9 @@ const FbContainer = styled.div`
   grid-column: 6;
   width: 100%;
   background-color: rgba(255, 255, 255, 0.3);
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
 
 `
 
@@ -58,4 +72,16 @@ const ColorPin = styled.div`
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.color};
+`
+
+const FbPin = styled.div`
+  width: 80%;
+  height: 80%;
+  margin: 10%;
+  border-radius: 50%;
+  background-color: white;
+`
+
+const FbPinRed = styled(FbPin)`
+  background-color: red;
 `

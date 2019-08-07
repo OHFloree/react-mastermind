@@ -2,8 +2,7 @@ class FeedbackService {
   constructor(solution) {
     this.solution = solution;
     this.attempts = [];
-    this.correctPositions = 0;
-    this.correctColors = 0;
+    this.feedback = [];
   }
 
   checkPlacement(placement) {
@@ -21,8 +20,23 @@ class FeedbackService {
     return this.attempts;
     console.log(this.attempts);
   }
-  getFeedback() {
-    return { correctColors :this.correctColors, correctPositions: this.correctPositions}
+
+  getFeedback(placement) {
+    let solution = this.solution;
+    let correctColors = 0;
+    let correctPositions = 0;
+    for(let i=0; i<placement.length; i++) {
+      if(this.solution.includes(placement[i])) {
+        if(this.solution.indexOf(placement[i]) == i) {
+          correctPositions++;
+        }
+        else {
+          correctColors++;
+        }
+      }
+    }
+    this.feedback.push([correctPositions, correctColors])
+    return this.feedback
   }
 }
 

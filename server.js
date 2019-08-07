@@ -31,7 +31,8 @@ io.on('connection', (socket) => {
       counter +=1;
       if (counter<12) {
         let attempts = feedback.getAttempts(placement.placement);
-        socket.emit('feedback', {attempts});
+        let feedbackObject = feedback.getFeedback(placement.placement);
+        socket.emit('feedback', {attempts, feedback: feedbackObject});
       }
       else {
         gameover = true;
