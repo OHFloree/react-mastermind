@@ -27,6 +27,7 @@ io.on('connection', (socket) => {
   socket.on('placement', (placement) => {
     let checked = feedback.checkPlacement(placement.placement);
     if (checked) {
+      socket.emit('placementCb', null)
       counter +=1;
       if (counter<12) {
         let attempts = feedback.getAttempts(placement.placement);
@@ -38,7 +39,6 @@ io.on('connection', (socket) => {
         gameover = true;
       }
       if(gameover) {
-        console.log('gameover');
         socket.emit('gameover', {solution, disabled: true})
       }
     }

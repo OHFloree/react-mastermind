@@ -31,23 +31,23 @@ Solution.contextType = SocketContext
 export default Solution
 
 const SolutionWrapper = styled.div`
-  grid-row: 2;
-  width: 300px;
+  width: 14em;
   margin-left: auto;
   margin-right: auto;
+  padding: 0.5em 0;
   border: solid white;
   border-width: 0px 5px 5px 5px;
   border-radius: 0 0 15px 15px;
   background-color: black;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 `
 
 const SolutionPin = styled.div`
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
-  margin: 5px auto;
+  width: 2em;
+  height: 2em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.bgColor};
