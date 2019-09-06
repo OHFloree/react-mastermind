@@ -2,20 +2,20 @@ class ColorService {
   constructor() {
     this.solution = [];
     this.colorPool = [
-      "#FF0000",
-      "#00FF00",
-      "#0000FF",
-      "#FFFF00",
-      "#00FFFF",
-      "#FF00FF",
-      "#FF9B00",
-      "#216621"
+      "#e53935",
+      "#1e88e5",
+      "#43a047",
+      "#fdd835",
+      "#ce93d8",
+      "#4dd0e1",
+      "#ffa000",
+      "#8e24aa"
     ];
   }
-  getSolution(n) {
+  getSolution() {
     let solution = [];
     for(let i=0; i<4; i++) {
-      let color = Math.floor(Math.random() * n);
+      let color = Math.floor(Math.random() * this.colorPool.length);
       solution[i] = this.colorPool[color]
     }
     return solution
