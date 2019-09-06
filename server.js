@@ -38,6 +38,7 @@ io.on('connection', (socket) => {
         gameover = true;
       }
       if(gameover) {
+        console.log('gameover');
         socket.emit('gameover', {solution, disabled: true})
       }
     }

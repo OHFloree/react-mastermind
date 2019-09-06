@@ -2,6 +2,9 @@ import React, {Component} from 'react';
 import styled from 'styled-components'
 
 class FieldRow extends Component {
+  componentDidMount(){
+    console.log();
+  }
 
   render() {
     var redPins = [];
@@ -12,7 +15,6 @@ class FieldRow extends Component {
     for(let i=0;i<this.props.feedback[1];i++) {
       whitePins.push(<FbPin key={'white' + i} />)
     }
-
     return (
       <Row>
         <ColorContainer>
@@ -41,29 +43,13 @@ const Row = styled.div`
 const FbContainer = styled.div`
   grid-column: 6;
   width: 100%;
+  height:;
   background-color: rgba(255, 255, 255, 0.3);
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   align-items: center;
-  ::before {
-    content: '';
-    width: 0;
-    padding-top: 100%;
-  }
-  @media (min-width: 400px) {
-    width: 80%;
-  }
-  @media (min-width: 600px) {
-    width: 70%;
-  }
-  @media (min-width: 1000px) {
-    width: 50%;
-  }
-  @media (min-width: 1500px) {
-    width: 30%;
-  }
 `
 
 const ColorContainer = styled.div`
