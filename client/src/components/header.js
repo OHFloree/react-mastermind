@@ -11,6 +11,6 @@ function Header() {
 export default Header;
 
 const HeaderWrapper = styled.div`
-  height: 60px;
+  height: 100px;
   background-color: #620000;
 `

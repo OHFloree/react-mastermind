@@ -33,6 +33,9 @@ class PinPlacement extends Component {
 
     var placement = this.state.placement;
     this.context.emit('placement', {placement})
+    this.context.on('placementCb', () => {
+      this.setState({placement: ['','','','']})
+    })
   }
 
   handlePinSelection = (e) => {
@@ -91,9 +94,9 @@ const LowerContainer = styled.div`
   height: 5em;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
-  overflow-x: auto;
+  overflow-x: scroll;
   overflow-y: hidden;
   display: ${props => props.display};
 `
@@ -105,6 +108,10 @@ const SelectionPin = styled.button`
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.bgColor || 'black'};
+  transition: 150ms all ease-in-out;
+  :active {
+    transform: translate(0, -0.5em);
+  }
 `
 
 const Submit = styled.button`
@@ -116,8 +123,9 @@ const Submit = styled.button`
 `
 
 const ColorSelector = styled.button`
-  width: 2em;
+  min-width: 2em;
   height: 2em;
+  margin: 0 7%;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.value};
