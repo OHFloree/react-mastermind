@@ -33,10 +33,11 @@ GameField.contextType = SocketContext
 export default GameField
 
 const FieldWrapper = styled.div`
-  grid-row: 3;
-  margin: 2%;
+  height: 100%;
+  margin: 1em 1em 0% 1em;
   overflow-y: scroll;
-  display: grid;
-  grid-template-rows: repeat(12, 1fr);
-  grid-row-gap: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
 `

@@ -50,15 +50,17 @@ class PinPlacement extends Component {
   render() {
     return (
       <PlacementContainer onSubmit={this.handleSubmit}>
+        <UpperContainer>
         {this.state.placement.map((color, i) => {
           return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} bgColor={color}></SelectionPin>
         })}
-        <ColorSelection display= {this.state.display ? 'grid' : 'none'}>
+        <Submit type="submit" disabled={this.state.gameover}>OK</Submit>
+        </UpperContainer>
+        <LowerContainer display= {this.state.display ? 'flex' : 'none'}>
           {this.state.colorPool.map((color, index) => {
             return <ColorSelector onClick={this.handleColorSelection} key={index} value={color}></ColorSelector>
           })}
-        </ColorSelection>
-        <Submit type="submit" disabled={this.state.gameover}>OK</Submit>
+        </LowerContainer>
       </PlacementContainer>
     );
   }
@@ -68,46 +70,54 @@ PinPlacement.contextType = SocketContext
 export default PinPlacement;
 
 const PlacementContainer = styled.form`
-  grid-row: 4;
-  padding: 0 2%;
+  min-height: 10em;
   border-top: 5px solid white;
   background-color: rgba(255, 255, 255, 0.3);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr) 0.5fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
 `
+
+const UpperContainer = styled.div`
+  height: 5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+`
+
+const LowerContainer = styled.div`
+  height: 5em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  overflow-x: auto;
+  overflow-y: hidden;
+  display: ${props => props.display};
+`
+
+
 const SelectionPin = styled.button`
-  grid-row: 1;
-  width: 40px;
-  height: 40px;
-  margin: auto;
+  width: 2em;
+  height: 2em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.bgColor || 'black'};
 `
 
 const Submit = styled.button`
-  grid-row: 1;
-  grid-column: 6;
-  height: 40px;
-  margin: auto 0;
+  width: 20%;
+  height: 2em;
   border: none;
   border-radius: 8px;
   background-color: white
 `
 
-const ColorSelection = styled.div`
-  grid-row: 2;
-  grid-column: 1 / 7;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  display: ${props => props.display};
-  grid-template-columns: repeat(8, 1fr);
-`
 const ColorSelector = styled.button`
-  width: 40px;
-  height: 40px;
-  margin: auto 10px;
+  width: 2em;
+  height: 2em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.value};

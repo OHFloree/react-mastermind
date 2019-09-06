@@ -35,15 +35,16 @@ export default FieldRow;
 
 
 const Row = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr) 0.5fr 1fr;
+  min-height: 4em;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `
 
 
 const FbContainer = styled.div`
-  grid-column: 6;
-  width: 100%;
-  height:;
+  width:4em;
   background-color: rgba(255, 255, 255, 0.3);
   display: grid;
   grid-template-rows: 1fr 1fr;
@@ -53,25 +54,25 @@ const FbContainer = styled.div`
 `
 
 const ColorContainer = styled.div`
-  grid-column: 1 / 5;
-  background-color: rgba(255, 255, 255, 0.3);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  justify-items: center;
+  width: calc(100% - 7em);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
 `
 
 const ColorPin = styled.div`
-  width: 36px;
-  height: 36px;
+  width: 2em;
+  height: 2em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.color};
 `
 
 const FbPin = styled.div`
-  width: 50%;
-  height: 50%;
+  width: 60%;
+  height: 60%;
   border-radius: 50%;
   background-color: white;
 `

@@ -26,6 +26,8 @@ export default App;
 
 const Wrapper = styled.div`
   height: 100vh;
-  display: grid;
-  grid-template-rows: 60px 60px auto 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
 `

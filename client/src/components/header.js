@@ -11,6 +11,6 @@ function Header() {
 export default Header;
 
 const HeaderWrapper = styled.div`
-  grid-row: 1;
+  height: 60px;
   background-color: #620000;
 `
