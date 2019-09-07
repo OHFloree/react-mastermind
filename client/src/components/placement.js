@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import SocketContext from '../context/socket-context.js'
 import styled from 'styled-components'
 
@@ -31,7 +31,7 @@ class PinPlacement extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    var placement = this.state.placement;
+    let placement = this.state.placement;
     this.context.emit('placement', {placement})
     this.context.on('placementCb', () => {
       this.setState({placement: ['','','','']})
@@ -50,20 +50,30 @@ class PinPlacement extends Component {
     this.setState({placement, display: !this.state.display})
   }
 
+  handleRestart = (e) => {
+  }
+
   render() {
     return (
       <PlacementContainer onSubmit={this.handleSubmit}>
-        <UpperContainer>
-        {this.state.placement.map((color, i) => {
-          return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} bgColor={color}></SelectionPin>
-        })}
-        <Submit type="submit" disabled={this.state.gameover}>OK</Submit>
-        </UpperContainer>
-        <LowerContainer display= {this.state.display ? 'flex' : 'none'}>
-          {this.state.colorPool.map((color, index) => {
-            return <ColorSelector onClick={this.handleColorSelection} key={index} value={color}></ColorSelector>
-          })}
-        </LowerContainer>
+        {this.state.gameover ? (
+          <p>Restart</p>
+        )
+        : (
+          <Fragment>
+            <UpperContainer>
+            {this.state.placement.map((color, i) => {
+              return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} disabled={this.state.gameover} bgColor={color}></SelectionPin>
+            })}
+            <Submit type="submit" disabled={this.state.gameover}>OK</Submit>
+            </UpperContainer>
+            <LowerContainer display= {this.state.display ? 'flex' : 'none'}>
+              {this.state.colorPool.map((color, index) => {
+                return <ColorSelector onClick={this.handleColorSelection} key={index} value={color}></ColorSelector>
+              })}
+            </LowerContainer>
+          </Fragment>
+        )}
       </PlacementContainer>
     );
   }
@@ -74,8 +84,8 @@ export default PinPlacement;
 
 const PlacementContainer = styled.form`
   min-height: 10em;
-  border-top: 5px solid white;
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: #263238;
+  box-shadow: 0px 10px 20px 10px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
   justify-content: stretch;
@@ -94,7 +104,7 @@ const LowerContainer = styled.div`
   height: 5em;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-evenly;
   align-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -107,7 +117,7 @@ const SelectionPin = styled.button`
   height: 2em;
   border: 2px solid white;
   border-radius: 50%;
-  background-color: ${props => props.bgColor || 'black'};
+  background-color: ${props => props.bgColor || '#000a12'};
   transition: 150ms all ease-in-out;
   :active {
     transform: translate(0, -0.5em);
@@ -117,15 +127,20 @@ const SelectionPin = styled.button`
 const Submit = styled.button`
   width: 20%;
   height: 2em;
-  border: none;
+  border: 2px solid white;
   border-radius: 8px;
-  background-color: white
+  color: white;
+  background-color: transparent;
+  transition: 120ms all ease-in-out;
+  :hover {
+    color: #1e88e5;
+    border-color: #1e88e5;
+  }
 `
 
 const ColorSelector = styled.button`
   min-width: 2em;
   height: 2em;
-  margin: 0 7%;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.value};

@@ -6,7 +6,13 @@ class FeedbackService {
   }
 
   won(placement) {
-    if (this.solution == placement) {
+    let counter = 0;
+    for (let i = 0; i<this.solution.length; i++) {
+      if (this.solution[i] == placement[i]) {
+        counter ++;
+      }
+    }
+    if (counter == 4) {
       return true
     }
     else {

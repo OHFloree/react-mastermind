@@ -3,7 +3,6 @@ import styled from 'styled-components'
 
 class FieldRow extends Component {
   componentDidMount(){
-    console.log();
   }
 
   render() {

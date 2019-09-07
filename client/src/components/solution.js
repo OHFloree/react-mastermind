@@ -20,7 +20,7 @@ class Solution extends Component {
     return(
       <SolutionWrapper>
         {this.state.solution.map((color, index) => {
-            return <SolutionPin key={index} bgColor={color || 'black'}></SolutionPin>
+            return <SolutionPin key={index} bgColor={color}></SolutionPin>
         })}
       </SolutionWrapper>
     );
@@ -32,13 +32,7 @@ export default Solution
 
 const SolutionWrapper = styled.div`
   width: 14em;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0.5em 0;
-  border: solid white;
-  border-width: 0px 5px 5px 5px;
-  border-radius: 0 0 15px 15px;
-  background-color: black;
+  height: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -50,5 +44,5 @@ const SolutionPin = styled.div`
   height: 2em;
   border: 2px solid white;
   border-radius: 50%;
-  background-color: ${props => props.bgColor};
+  background-color: ${props => props.bgColor || '#000a12'};
 `
