@@ -24,20 +24,22 @@ class Header extends Component {
   }
 
   handlePause = (e) => {
-    alert('pause')
+    this.setState({pause: !this.state.pause})
   }
 
   render() {
     return (
-      <HeaderWrapper>
-        <IconContainer>
-          <Icon icon={faCog} size="lg" onClick={this.handlePause} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} spin={this.state.anim}/>
-        </IconContainer>
-        <Solution />
-        <LogoContainer>
-          <img src={Logo} height="40px"></img>
-        </LogoContainer>
-      </HeaderWrapper>
+      <Fragment>
+        <HeaderWrapper>
+          <IconContainer>
+            <Icon icon={faCog} size="lg" onClick={this.props.getPause.bind(this.state.pause)} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} spin={this.state.anim}/>
+          </IconContainer>
+          <Solution />
+          <LogoContainer>
+            <img src={Logo} height="40px"></img>
+          </LogoContainer>
+        </HeaderWrapper>
+      </Fragment>
     );
   }
 }
