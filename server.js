@@ -1,10 +1,9 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const path = require('path');
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
