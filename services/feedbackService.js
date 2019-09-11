@@ -39,13 +39,11 @@ class FeedbackService {
     let solution = this.solution;
     let correctPositions = [];
     let correctColors = [];
-    let allreadyChecked = [];
     for(let i = 0;i < solution.length; i++) {
       if(placement[i] == solution[i]) {
         correctPositions.push(solution[i]);
-        allreadyChecked.push(solution[i]);
       }
-      if(solution[i] !== placement[i] && solution.includes(placement[i])) {
+      else if(placement.includes(solution[i])) {
         for(let j = 0;j < solution.length; j++) {
           if(solution[i] == placement[j]) {
             correctColors.push(placement[j])
