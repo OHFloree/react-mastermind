@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       pause: false,
       handlePause: this.handlePause,
-      socket: io('http://192.168.0.0.115:80')
+      socket: io('http://192.168.2.107:80')
     }
   }
 
