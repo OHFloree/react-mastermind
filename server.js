@@ -3,21 +3,20 @@ const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
+const path = require('path');
 const PORT = process.env.PORT || 5000;
 
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-const path = require('path');
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-});
-}
-
 server.listen(PORT, () => {
   console.log(`listening on PORT: ${PORT}`);
 })
+
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+});
 
 
 io.on('connection', (socket) => {
