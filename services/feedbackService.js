@@ -6,7 +6,13 @@ class FeedbackService {
   }
 
   won(placement) {
-    if (this.solution == placement) {
+    let counter = 0;
+    for (let i = 0; i<this.solution.length; i++) {
+      if (this.solution[i] == placement[i]) {
+        counter ++;
+      }
+    }
+    if (counter == 4) {
       return true
     }
     else {
@@ -31,20 +37,22 @@ class FeedbackService {
   }
 
   getFeedback(placement) {
-    let correctColors = 0;
-    let correctPositions = 0;
-    for(let i=0; i<placement.length; i++) {
-      if(this.solution.indexOf(placement[i]) == i) {
-        correctPositions ++;
+    let correctPositions = [];
+    let correctColors = [];
+    for(let i = 0;i < this.solution.length; i++) {
+      if(placement[i] == this.solution[i]) {
+        correctPositions.push(placement[i]);
+      }
+      if(this.solution[i] !== placement[i] && placement.includes(this.solution[i])) {
+        correctColors.push(placement[i]);
       }
     }
-    for(let i=0; i<placement.length; i++) {
-      if(this.solution.includes(placement[i])) {
-        correctColors ++;
-      }
-    }
-    correctColors = correctColors - correctPositions;
-    this.feedback.push([correctPositions,correctColors])
+
+    this.feedback.push([correctPositions.length,correctColors.length])
+    console.log(`placement: ${placement}
+    solution: ${this.solution}`);
+    console.log(correctPositions);
+    console.log(correctColors);
     return this.feedback
   }
 }

@@ -27,6 +27,7 @@ io.on('connection', (socket) => {
   socket.on('placement', (placement) => {
     let checked = feedback.checkPlacement(placement.placement);
     if (checked) {
+      socket.emit('placementCb', null)
       counter +=1;
       if (counter<12) {
         let attempts = feedback.getAttempts(placement.placement);

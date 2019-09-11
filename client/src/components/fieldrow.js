@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import styled from 'styled-components'
 
 class FieldRow extends Component {
+  componentDidMount(){
+  }
 
   render() {
     var redPins = [];
@@ -12,7 +14,6 @@ class FieldRow extends Component {
     for(let i=0;i<this.props.feedback[1];i++) {
       whitePins.push(<FbPin key={'white' + i} />)
     }
-
     return (
       <Row>
         <ColorContainer>
@@ -33,59 +34,44 @@ export default FieldRow;
 
 
 const Row = styled.div`
-  display: grid;
-  grid-template-columns: repeat(4, 1fr) 0.5fr 1fr;
+  min-height: 4em;
+  margin-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `
 
 
 const FbContainer = styled.div`
-  grid-column: 6;
-  width: 100%;
+  width:4em;
   background-color: rgba(255, 255, 255, 0.3);
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr;
   justify-items: center;
   align-items: center;
-  ::before {
-    content: '';
-    width: 0;
-    padding-top: 100%;
-  }
-  @media (min-width: 400px) {
-    width: 80%;
-  }
-  @media (min-width: 600px) {
-    width: 70%;
-  }
-  @media (min-width: 1000px) {
-    width: 50%;
-  }
-  @media (min-width: 1500px) {
-    width: 30%;
-  }
 `
 
 const ColorContainer = styled.div`
-  grid-column: 1 / 5;
-  background-color: rgba(255, 255, 255, 0.3);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  justify-items: center;
+  width: calc(100% - 7em);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
   align-items: center;
+  background-color: rgba(255, 255, 255, 0.3);
 `
 
 const ColorPin = styled.div`
-  width: 36px;
-  height: 36px;
+  width: 3em;
+  height: 3em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.color};
 `
 
 const FbPin = styled.div`
-  width: 50%;
-  height: 50%;
+  width: 60%;
+  height: 60%;
   border-radius: 50%;
   background-color: white;
 `
