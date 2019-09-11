@@ -1,5 +1,5 @@
-import React, {Component} from 'react';
-import SocketContext from '../context/socket-context.js'
+import React, {Component, Fragment} from 'react';
+import Context from '../context/context.js'
 import styled from 'styled-components'
 
 class PinPlacement extends Component {
@@ -15,15 +15,15 @@ class PinPlacement extends Component {
   }
 
   componentDidMount() {
-    this.context.on('colors', (color) => {
+    this.context.socket.on('colors', (color) => {
       this.setState({colorPool: color.colorPool})
     })
 
-    this.context.on('invalid', (text) => {
+    this.context.socket.on('invalid', (text) => {
       alert(text)
     })
 
-    this.context.on('gameover', (data) => {
+    this.context.socket.on('gameover', (data) => {
       this.setState({gameover: data.disabled})
     })
   }
@@ -31,8 +31,11 @@ class PinPlacement extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    var placement = this.state.placement;
-    this.context.emit('placement', {placement})
+    let placement = this.state.placement;
+    this.context.socket.emit('placement', {placement})
+    this.context.socket.on('placementCb', () => {
+      this.setState({placement: ['','','','']})
+    })
   }
 
   handlePinSelection = (e) => {
@@ -47,67 +50,97 @@ class PinPlacement extends Component {
     this.setState({placement, display: !this.state.display})
   }
 
+  handleRestart = (e) => {
+  }
+
   render() {
     return (
       <PlacementContainer onSubmit={this.handleSubmit}>
-        {this.state.placement.map((color, i) => {
-          return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} bgColor={color}></SelectionPin>
-        })}
-        <ColorSelection display= {this.state.display ? 'grid' : 'none'}>
-          {this.state.colorPool.map((color, index) => {
-            return <ColorSelector onClick={this.handleColorSelection} key={index} value={color}></ColorSelector>
-          })}
-        </ColorSelection>
-        <Submit type="submit" disabled={this.state.gameover}>OK</Submit>
+        {this.state.gameover ? (
+          <p>Restart</p>
+        )
+        : (
+          <Fragment>
+            <UpperContainer>
+            {this.state.placement.map((color, i) => {
+              return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} disabled={this.state.gameover} bgColor={color}></SelectionPin>
+            })}
+            <Submit type="submit" disabled={this.state.gameover}>OK</Submit>
+            </UpperContainer>
+            <LowerContainer display= {this.state.display ? 'flex' : 'none'}>
+              {this.state.colorPool.map((color, index) => {
+                return <ColorSelector onClick={this.handleColorSelection} key={index} value={color}></ColorSelector>
+              })}
+            </LowerContainer>
+          </Fragment>
+        )}
       </PlacementContainer>
     );
   }
 }
-PinPlacement.contextType = SocketContext
+PinPlacement.contextType = Context
 
 export default PinPlacement;
 
 const PlacementContainer = styled.form`
-  grid-row: 4;
-  padding: 0 2%;
-  border-top: 5px solid white;
-  background-color: rgba(255, 255, 255, 0.3);
-  display: grid;
-  grid-template-columns: repeat(4, 1fr) 0.5fr 1fr;
-  grid-template-rows: 1fr 1fr;
-`
-const SelectionPin = styled.button`
-  grid-row: 1;
-  width: 40px;
-  height: 40px;
-  margin: auto;
-  border: 2px solid white;
-  border-radius: 50%;
-  background-color: ${props => props.bgColor || 'black'};
+  min-height: 15em;
+  background-color: #263238;
+  box-shadow: 0px 10px 20px 10px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
 `
 
-const Submit = styled.button`
-  grid-row: 1;
-  grid-column: 6;
-  height: 40px;
-  margin: auto 0;
-  border: none;
-  border-radius: 8px;
-  background-color: white
+const UpperContainer = styled.div`
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 `
 
-const ColorSelection = styled.div`
-  grid-row: 2;
-  grid-column: 1 / 7;
+const LowerContainer = styled.div`
+  height: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
   display: ${props => props.display};
-  grid-template-columns: repeat(8, 1fr);
 `
+
+
+const SelectionPin = styled.button`
+  width: 3em;
+  height: 3em;
+  border: 2px solid white;
+  border-radius: 50%;
+  background-color: ${props => props.bgColor || '#000a12'};
+  transition: 150ms all ease-in-out;
+  :active {
+    transform: translate(0, -0.5em);
+  }
+`
+
+const Submit = styled.button`
+  width: 20%;
+  height: 3em;
+  border: 2px solid white;
+  border-radius: 8px;
+  color: white;
+  background-color: transparent;
+  transition: 120ms all ease-in-out;
+  :hover {
+    color: #1e88e5;
+    border-color: #1e88e5;
+  }
+`
+
 const ColorSelector = styled.button`
-  width: 40px;
-  height: 40px;
-  margin: auto 10px;
+  min-width: 3em;
+  height: 3em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.value};

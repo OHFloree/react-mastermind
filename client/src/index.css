@@ -1,10 +1,16 @@
-body {
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+* {
   margin: 0;
-  background-image: url('images/background.png');
+  padding: 0;
+  outline: 0;
+  font-size: 16px;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+}
+
+body {
+  background-image: linear-gradient(to top, #1e88e5, #4dd0e1);
   background-size: cover;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  width: 100vw;
 }
