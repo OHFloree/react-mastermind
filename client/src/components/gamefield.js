@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SocketContext from '../context/socket-context.js'
+import Context from '../context/context.js'
 import styled from 'styled-components';
 import FieldRow from './fieldrow.js';
 
@@ -13,7 +13,7 @@ class GameField extends Component {
   }
 
   componentDidMount() {
-    this.context.on('feedback', (feedback) => {
+    this.context.socket.on('feedback', (feedback) => {
     this.setState({attempts: feedback.attempts, feedback: feedback.feedback})
     })
   }
@@ -28,7 +28,7 @@ class GameField extends Component {
     );
   }
 }
-GameField.contextType = SocketContext
+GameField.contextType = Context
 
 export default GameField
 
