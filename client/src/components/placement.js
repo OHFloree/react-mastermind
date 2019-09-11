@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-import SocketContext from '../context/socket-context.js'
+import Context from '../context/context.js'
 import styled from 'styled-components'
 
 class PinPlacement extends Component {
@@ -15,15 +15,15 @@ class PinPlacement extends Component {
   }
 
   componentDidMount() {
-    this.context.on('colors', (color) => {
+    this.context.socket.on('colors', (color) => {
       this.setState({colorPool: color.colorPool})
     })
 
-    this.context.on('invalid', (text) => {
+    this.context.socket.on('invalid', (text) => {
       alert(text)
     })
 
-    this.context.on('gameover', (data) => {
+    this.context.socket.on('gameover', (data) => {
       this.setState({gameover: data.disabled})
     })
   }
@@ -32,8 +32,8 @@ class PinPlacement extends Component {
     e.preventDefault();
 
     let placement = this.state.placement;
-    this.context.emit('placement', {placement})
-    this.context.on('placementCb', () => {
+    this.context.socket.emit('placement', {placement})
+    this.context.socket.on('placementCb', () => {
       this.setState({placement: ['','','','']})
     })
   }
@@ -78,12 +78,12 @@ class PinPlacement extends Component {
     );
   }
 }
-PinPlacement.contextType = SocketContext
+PinPlacement.contextType = Context
 
 export default PinPlacement;
 
 const PlacementContainer = styled.form`
-  min-height: 10em;
+  min-height: 15em;
   background-color: #263238;
   box-shadow: 0px 10px 20px 10px rgba(0,0,0,0.5);
   display: flex;
@@ -93,7 +93,7 @@ const PlacementContainer = styled.form`
 `
 
 const UpperContainer = styled.div`
-  height: 5em;
+  height: 50%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -101,7 +101,7 @@ const UpperContainer = styled.div`
 `
 
 const LowerContainer = styled.div`
-  height: 5em;
+  height: 50%;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
@@ -113,8 +113,8 @@ const LowerContainer = styled.div`
 
 
 const SelectionPin = styled.button`
-  width: 2em;
-  height: 2em;
+  width: 3em;
+  height: 3em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.bgColor || '#000a12'};
@@ -126,7 +126,7 @@ const SelectionPin = styled.button`
 
 const Submit = styled.button`
   width: 20%;
-  height: 2em;
+  height: 3em;
   border: 2px solid white;
   border-radius: 8px;
   color: white;
@@ -139,8 +139,8 @@ const Submit = styled.button`
 `
 
 const ColorSelector = styled.button`
-  min-width: 2em;
-  height: 2em;
+  min-width: 3em;
+  height: 3em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.value};

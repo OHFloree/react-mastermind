@@ -62,8 +62,8 @@ const ColorContainer = styled.div`
 `
 
 const ColorPin = styled.div`
-  width: 2em;
-  height: 2em;
+  width: 3em;
+  height: 3em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.color};

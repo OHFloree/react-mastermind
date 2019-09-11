@@ -1,5 +1,6 @@
 import React, {Component,Fragment} from 'react';
 import styled from 'styled-components';
+import Context from '../context/context.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faCog} from '@fortawesome/free-solid-svg-icons'
 
@@ -23,48 +24,37 @@ class Header extends Component {
     this.setState({anim: false})
   }
 
-  handlePause = (e) => {
-    this.setState({pause: !this.state.pause})
-  }
-
   render() {
     return (
       <Fragment>
         <HeaderWrapper>
           <IconContainer>
-            <Icon icon={faCog} size="lg" onClick={this.props.getPause.bind(this.state.pause)} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} spin={this.state.anim}/>
+            <Icon icon={faCog} size="lg" onClick={this.context.handlePause} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} spin={this.state.anim}/>
           </IconContainer>
           <Solution />
-          <LogoContainer>
-            <img src={Logo} height="40px"></img>
-          </LogoContainer>
+          <Spacing />
         </HeaderWrapper>
       </Fragment>
     );
   }
 }
+Header.contextType = Context
 
 export default Header;
 
 const HeaderWrapper = styled.div`
-  height: 100px;
+  height: 150px;
   padding: 0 5%;
   background-color: #263238;
   border-bottom: 5px solid white;
+  z-index: 2;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 `
 
-const LogoContainer = styled.div`
-  height: 100%;
-  width: 25%;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-`
+
 const IconContainer = styled.div`
   width: 25%;
   height: 100%;
@@ -75,8 +65,10 @@ const IconContainer = styled.div`
 `
 
 const Icon = styled(FontAwesomeIcon)`
-  font-size: 2em;
-  :active {
-    color: red;
-  }
+  font-size: 3em;
+`
+
+const Spacing = styled.div`
+  width: 25%;
+  height: 100%;
 `

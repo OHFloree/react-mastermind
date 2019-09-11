@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import SocketContext from '../context/socket-context.js'
+import Context from '../context/context.js'
 import styled from 'styled-components';
 
 class Solution extends Component {
@@ -11,7 +11,7 @@ class Solution extends Component {
   }
 
   componentDidMount() {
-    this.context.on('gameover', (data) => {
+    this.context.socket.on('gameover', (data) => {
       this.setState({solution: data.solution})
     })
   }
@@ -26,12 +26,12 @@ class Solution extends Component {
     );
   }
 }
-Solution.contextType = SocketContext
+Solution.contextType = Context
 
 export default Solution
 
 const SolutionWrapper = styled.div`
-  width: 14em;
+  width: 21em;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -40,8 +40,8 @@ const SolutionWrapper = styled.div`
 `
 
 const SolutionPin = styled.div`
-  width: 2em;
-  height: 2em;
+  width: 3em;
+  height: 3em;
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.bgColor || '#000a12'};
