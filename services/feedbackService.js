@@ -41,13 +41,17 @@ class FeedbackService {
     let correctColors = [];
     for(let i = 0;i < solution.length; i++) {
       if(placement[i] == solution[i]) {
-        correctPositions.push(placement[i]);
+        correctPositions.push(solution[i]);
       }
-      else if(solution[i].includes(placement[i])) {
-        correctColors.push(placement[i]);
+      else if(placement.includes(solution[i])) {
+        for(let j = 0;j < solution.length; j++) {
+          if(solution[i] == placement[j]) {
+            correctColors.push(placement[j])
+          }
+        }
       }
     }
-    this.feedback.push([correctPositions.length,correctColors.length])
+    this.feedback.push([correctPositions.length, correctColors.length])
     console.log(`placement: ${placement}`);
     console.log(correctPositions);
     console.log(correctColors);
