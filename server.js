@@ -16,7 +16,8 @@ io.on('connection', (socket) => {
   let counter = 0;
   const colorService = require('./services/colorService')
   const colors = new colorService;
-  const solution = colors.getSolution(8);
+  const solution = colors.getSolution();
+  console.log(`solution: ${solution}`);
   const colorPool = colors.getColors();
 
   const feedbackService = require('./services/feedbackService')

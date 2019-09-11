@@ -34,8 +34,9 @@ export default GameField
 
 const FieldWrapper = styled.div`
   height: 100%;
-  margin: 1em 1em 0% 1em;
+  padding: 1em 1em 0% 1em;
   overflow-y: scroll;
+  background-image: linear-gradient(to top, #1e88e5, #4dd0e1);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
