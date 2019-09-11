@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
-import io from 'socket.io-client';
+import openSocket from 'socket.io-client';
 import styled from 'styled-components'
 import Context from './context/context.js'
 
@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       pause: false,
       handlePause: this.handlePause,
-      socket: io.connect('https://mern-mastermind.herokuapp.com')
+      socket: openSocket('https://mern-mastermind.herokuapp.com')
     }
   }
 
