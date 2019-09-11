@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       pause: false,
       handlePause: this.handlePause,
-      socket: io.connect('http://192.168.0.8:5000')
+      socket: io.connect('https://mern-mastermind.herokuapp.com')
     }
   }
 
