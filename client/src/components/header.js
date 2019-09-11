@@ -1,4 +1,5 @@
 import React, {Component,Fragment} from 'react';
+import {BrowserRouter as Route,Link} from 'react-router-dom'
 import styled from 'styled-components';
 import Context from '../context/context.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -32,7 +33,10 @@ class Header extends Component {
             <Icon icon={faCog} size="lg" onClick={this.context.handlePause} onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut} spin={this.state.anim}/>
           </IconContainer>
           <Solution />
-          <Spacing />
+          <Spacing>
+            <Link to="/impressum">Impressum</Link>
+            <Link to="/datenschutz">Datenschutz</Link>
+          </Spacing>
         </HeaderWrapper>
       </Fragment>
     );
@@ -71,4 +75,8 @@ const Icon = styled(FontAwesomeIcon)`
 const Spacing = styled.div`
   width: 25%;
   height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
 `

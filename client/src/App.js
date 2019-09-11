@@ -1,4 +1,5 @@
 import React, {Component, Fragment} from 'react';
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import io from 'socket.io-client';
 import styled from 'styled-components'
 import Context from './context/context.js'
@@ -7,6 +8,8 @@ import Header from './components/header.js'
 import GameField from './components/gamefield.js'
 import PinPlacement from './components/placement.js'
 import Menu from './components/menu.js'
+import Datenschutz from './components/datenschutz.js'
+import Impressum from './components/impressum.js'
 
 class App extends Component {
   constructor() {
@@ -19,25 +22,42 @@ class App extends Component {
   }
 
   handlePause = () => {
-    console.log(this.state.pause);
     this.setState({pause: !this.state.pause})
+    console.log(this.state.pause);
   }
 
   render() {
     return (
-      <Context.Provider value = {this.state}>
-        <Wrapper>
-          {this.state.pause ? <Overlay><Menu /></Overlay> : null}
-          <Header />
-          <GameField />
-          <PinPlacement />
-        </Wrapper>
-      </Context.Provider>
+      <Router>
+        <Context.Provider value = {this.state}>
+          <Wrapper>
+            <Switch>
+              <Route exact path="/" component={Game}/>
+              <Route path="/impressum" component={Impressum}/>
+              <Route path="/datenschutz" component={Datenschutz}/>
+            </Switch>
+          </Wrapper>
+        </Context.Provider>
+      </Router>
     );
   }
 }
 
 export default App;
+
+function Game() {
+  return (
+    <Context.Consumer>
+        {({pause}) => (
+        <Fragment>
+           {pause ? <Overlay><Menu /></Overlay> : null}
+          <Header />
+          <GameField />
+          <PinPlacement />
+        </Fragment>)}
+    </Context.Consumer>
+  )
+}
 
 const Wrapper = styled.div`
   height: 100vh;
