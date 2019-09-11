@@ -10,13 +10,13 @@ if(process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-server.listen(PORT, () => {
-  console.log(`listening on PORT: ${PORT}`);
-})
-
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
+
+server.listen(PORT, () => {
+  console.log(`listening on PORT: ${PORT}`);
+})
 
 
 io.on('connection', (socket) => {
