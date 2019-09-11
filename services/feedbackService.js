@@ -33,24 +33,22 @@ class FeedbackService {
   getAttempts(placement) {
     this.attempts.push({placement})
     return this.attempts;
-    console.log(this.attempts);
   }
 
   getFeedback(placement) {
+    let solution = this.solution;
     let correctPositions = [];
     let correctColors = [];
-    for(let i = 0;i < this.solution.length; i++) {
-      if(placement[i] == this.solution[i]) {
+    for(let i = 0;i < solution.length; i++) {
+      if(placement[i] == solution[i]) {
         correctPositions.push(placement[i]);
       }
-      if(this.solution[i] !== placement[i] && placement.includes(this.solution[i])) {
+      else if(solution[i].includes(placement[i])) {
         correctColors.push(placement[i]);
       }
     }
-
     this.feedback.push([correctPositions.length,correctColors.length])
-    console.log(`placement: ${placement}
-    solution: ${this.solution}`);
+    console.log(`placement: ${placement}`);
     console.log(correctPositions);
     console.log(correctColors);
     return this.feedback
