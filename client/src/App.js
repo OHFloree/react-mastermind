@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       pause: false,
       handlePause: this.handlePause,
-      socket: io.connect('localhost:5000')
+      socket: io.connect('localhost')
     }
   }
 
