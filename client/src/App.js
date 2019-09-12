@@ -17,7 +17,7 @@ class App extends Component {
     this.state = {
       pause: false,
       handlePause: this.handlePause,
-      socket: io.connect('localhost:8000')
+      socket: io.connect('https://mern-mastermind.herokuapp.com')
     }
   }
 
@@ -60,7 +60,9 @@ function Game() {
 }
 
 const Wrapper = styled.div`
+  width: 100vw;
   height: 100vh;
+  overflow: auto;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
