@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faTimes} from '@fortawesome/free-solid-svg-icons'
 
 class Menu extends Component {
-  
+
   render() {
     return (
       <MenuContainer>
@@ -31,11 +31,22 @@ const MenuContainer = styled.div`
   width: 50%;
   background-color: #263238;
   box-shadow: 10px 10px 20px -10px rgba(0,0,0,0.3);
-  z-index: 3;
   display: flex;
+  z-index: 3;
   flex-direction: column;
   justify-content: flex-start;
   align-itemn: stretch;
+  @media (max-width: 625px) {
+    width: 65%;
+  }
+  @media (max-width: 450px) {
+    width: 75%;
+  }
+  @media (max-width: 330px) {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(38,50,56,0.6);
+  }
 `
 const MenuHead = styled.div`
   height: 4em;
@@ -45,6 +56,9 @@ const MenuHead = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  @media (max-width: 330px) {
+    height: 80px;
+  }
 `
 
 const MenuBody = styled.div`

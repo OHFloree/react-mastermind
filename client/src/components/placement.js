@@ -84,19 +84,23 @@ export default PinPlacement;
 
 const PlacementContainer = styled.form`
   min-height: 15em;
+  padding: 0 2em;
   background-color: #263238;
   box-shadow: 0px 10px 20px 10px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
   justify-content: stretch;
   align-items: stretch;
+  @media (max-width: 400px) {
+    min-height: 12em;
+  }
 `
 
 const UpperContainer = styled.div`
   height: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
 `
 
@@ -104,7 +108,7 @@ const LowerContainer = styled.div`
   height: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
   overflow-x: scroll;
   overflow-y: hidden;
@@ -144,4 +148,7 @@ const ColorSelector = styled.button`
   border: 2px solid white;
   border-radius: 50%;
   background-color: ${props => props.value};
+  @media (max-width: 500px) {
+    margin: 0 10px;
+  }
 `

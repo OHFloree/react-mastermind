@@ -34,8 +34,8 @@ class Header extends Component {
           </IconContainer>
           <Solution />
           <Spacing>
-            <Link to="/impressum">Impressum</Link>
-            <Link to="/datenschutz">Datenschutz</Link>
+            <A to="/impressum">Impressum</A>
+            <A to="/datenschutz">Datenschutz</A>
           </Spacing>
         </HeaderWrapper>
       </Fragment>
@@ -47,7 +47,7 @@ Header.contextType = Context
 export default Header;
 
 const HeaderWrapper = styled.div`
-  height: 150px;
+  min-height: 80px;
   padding: 0 5%;
   background-color: #263238;
   border-bottom: 5px solid white;
@@ -69,7 +69,7 @@ const IconContainer = styled.div`
 `
 
 const Icon = styled(FontAwesomeIcon)`
-  font-size: 3em;
+  font-size: 2.5em;
 `
 
 const Spacing = styled.div`
@@ -77,6 +77,20 @@ const Spacing = styled.div`
   height: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
+`
+
+const A = styled(Link)`
+  z-index: 3;
+  @media (max-width: 525px) {
+    position: absolute;
+    top: 85px;
+    :nth-child(1) {
+      left: 20%;
+    }
+    :nth-child(2) {
+      right: 20%;
+    }
+  }
 `
