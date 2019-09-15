@@ -51,13 +51,14 @@ class PinPlacement extends Component {
   }
 
   handleRestart = (e) => {
+    window.location.reload();
   }
 
   render() {
     return (
-      <PlacementContainer onSubmit={this.handleSubmit}>
+      <PlacementContainer onSubmit={this.handleSubmit} justify={this.state.gameover}>
         {this.state.gameover ? (
-          <p>Restart</p>
+          <Submit type="button" onClick={this.handleRestart}>Restart Game</Submit>
         )
         : (
           <Fragment>
@@ -65,7 +66,7 @@ class PinPlacement extends Component {
             {this.state.placement.map((color, i) => {
               return <SelectionPin id={i} onClick={this.handlePinSelection} key={i} disabled={this.state.gameover} bgColor={color}></SelectionPin>
             })}
-            <Submit type="submit" disabled={this.state.gameover}>OK</Submit>
+            <Submit type="submit" disabled={this.state.gameover}>Ok</Submit>
             </UpperContainer>
             <LowerContainer display= {this.state.display ? 'flex' : 'none'}>
               {this.state.colorPool.map((color, index) => {
@@ -89,8 +90,8 @@ const PlacementContainer = styled.form`
   box-shadow: 0px 10px 20px 10px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
-  justify-content: stretch;
-  align-items: stretch;
+  justify-content: ${props => props.justify ? 'center' : 'flex-start'};
+  align-items: ${props => props.justify ? 'center' : 'stretch'};
   @media (max-width: 400px) {
     min-height: 12em;
   }
@@ -129,13 +130,16 @@ const SelectionPin = styled.button`
 `
 
 const Submit = styled.button`
-  width: 20%;
   height: 3em;
+  padding:0 2em;
   border: 2px solid white;
   border-radius: 8px;
   color: white;
   background-color: transparent;
   transition: 120ms all ease-in-out;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
   :hover {
     color: #1e88e5;
     border-color: #1e88e5;
