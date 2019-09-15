@@ -1,10 +1,17 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
-const PORT = process.env.PORT || 5000;
+const io = require('socket.io').listen(server);
+const path = require('path');
+const PORT = process.env.PORT || 8000;
 
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 server.listen(PORT, () => {
   console.log(`listening on PORT: ${PORT}`);
@@ -16,7 +23,8 @@ io.on('connection', (socket) => {
   let counter = 0;
   const colorService = require('./services/colorService')
   const colors = new colorService;
-  const solution = colors.getSolution(8);
+  const solution = colors.getSolution();
+  console.log(`solution: ${solution}`);
   const colorPool = colors.getColors();
 
   const feedbackService = require('./services/feedbackService')

@@ -73,9 +73,9 @@ const FbPin = styled.div`
   width: 60%;
   height: 60%;
   border-radius: 50%;
-  background-color: white;
+  background-color: #000a12;
 `
 
 const FbPinRed = styled(FbPin)`
-  background-color: red;
+  background-color: #e53935;
 `

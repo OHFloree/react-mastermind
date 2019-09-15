@@ -33,26 +33,31 @@ class FeedbackService {
   getAttempts(placement) {
     this.attempts.push({placement})
     return this.attempts;
-    console.log(this.attempts);
   }
 
-  getFeedback(placement) {
-    let correctPositions = [];
-    let correctColors = [];
-    for(let i = 0;i < this.solution.length; i++) {
-      if(placement[i] == this.solution[i]) {
-        correctPositions.push(placement[i]);
-      }
-      if(this.solution[i] !== placement[i] && placement.includes(this.solution[i])) {
-        correctColors.push(placement[i]);
+  getFeedback(userPlacement) {
+    let solution = this.solution.slice()
+    let placement = userPlacement.slice()
+    let correctPositions = 0
+    let correctColors = 0
+
+    for(let i = 0; i < this.solution.length; i++) {
+      if(solution[i] === placement[i]) {
+        solution[i] = placement[i] = null;
+        correctPositions ++;
       }
     }
-
-    this.feedback.push([correctPositions.length,correctColors.length])
-    console.log(`placement: ${placement}
-    solution: ${this.solution}`);
-    console.log(correctPositions);
-    console.log(correctColors);
+    for(let i = 0; i < this.solution.length; i++) {
+      for(let j = 0; j < this.solution.length; j++) {
+        if(solution[i] && placement[i]) {
+          if(placement[i] === solution[j]) {
+            solution[j] = placement[i] = null;
+            correctColors ++;
+          }
+        }
+      }
+    }
+    this.feedback.push([correctPositions, correctColors])
     return this.feedback
   }
 }
