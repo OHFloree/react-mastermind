@@ -1,10 +1,17 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').Server(app);
-const io = require('socket.io')(server);
-const PORT = process.env.PORT || 5000;
+const io = require('socket.io').listen(server);
+const path = require('path');
+const PORT = process.env.PORT || 8000;
 
+if(process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 server.listen(PORT, () => {
   console.log(`listening on PORT: ${PORT}`);
