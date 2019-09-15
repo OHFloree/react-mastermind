@@ -35,26 +35,29 @@ class FeedbackService {
     return this.attempts;
   }
 
-  getFeedback(placement) {
-    let solution = this.solution;
-    let correctPositions = [];
-    let correctColors = [];
-    for(let i = 0;i < solution.length; i++) {
-      if(placement[i] == solution[i]) {
-        correctPositions.push(solution[i]);
+  getFeedback(userPlacement) {
+    let solution = this.solution.slice()
+    let placement = userPlacement.slice()
+    let correctPositions = 0
+    let correctColors = 0
+
+    for(let i = 0; i < this.solution.length; i++) {
+      if(solution[i] === placement[i]) {
+        solution[i] = placement[i] = null;
+        correctPositions ++;
       }
-      else if(placement.includes(solution[i])) {
-        for(let j = 0;j < solution.length; j++) {
-          if(solution[i] == placement[j]) {
-            correctColors.push(placement[j])
+    }
+    for(let i = 0; i < this.solution.length; i++) {
+      for(let j = 0; j < this.solution.length; j++) {
+        if(solution[i] && placement[i]) {
+          if(placement[i] === solution[j]) {
+            solution[j] = placement[i] = null;
+            correctColors ++;
           }
         }
       }
     }
-    this.feedback.push([correctPositions.length, correctColors.length])
-    console.log(`placement: ${placement}`);
-    console.log(correctPositions);
-    console.log(correctColors);
+    this.feedback.push([correctPositions, correctColors])
     return this.feedback
   }
 }
