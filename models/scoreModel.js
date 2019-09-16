@@ -8,6 +8,10 @@ const ScoreSchema = new Schema({
   },
   score: {
     type: Number
+  },
+  date: {
+    type: Date,
+    default: Date.now()
   }
 });
 

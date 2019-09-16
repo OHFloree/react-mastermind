@@ -44,10 +44,12 @@ io.on('connection', (socket) => {
 
   const feedbackService = require('./services/feedbackService')
   const feedback = new feedbackService(solution);
-  const highscoreService = require('./services/ScoreService')
+  const scoreService = require('./services/ScoreService')
+  const score = new scoreService
 
   var gameover = false;
   let won = false;
+  let isTimerRunning = false;
   // Colors
   socket.emit('colors', {colorPool});
   // Placement
@@ -55,6 +57,10 @@ io.on('connection', (socket) => {
     let checked = feedback.checkPlacement(placement.placement);
     if (checked) {
       socket.emit('placementCb', null)
+      if (!isTimerRunning) {
+        score.startTimer()
+        isTimerRunning = true;
+      }
       counter +=1;
       if (counter<12) {
         let attempts = feedback.getAttempts(placement.placement);
@@ -65,6 +71,9 @@ io.on('connection', (socket) => {
       }
       else {
         gameover = true;
+        score.stopTimer(() => {
+          isTimerRunning = false;
+        })
       }
       if(gameover) {
         socket.emit('gameover', {solution, disabled: true, won})
@@ -77,13 +86,13 @@ io.on('connection', (socket) => {
 
   // Scores
   socket.on('score', () => {
-    const score = Score.find({})
-    .then(score => socket.emit('scoreCb', score))
+    let scoreboard = Score.find({})
+    .then(scoreboard => socket.emit('scoreCb', scoreboard))
   })
   socket.on('newScore', (data) => {
-    newScore = new Score({
+    let newScore = new Score({
       user: data.name,
-      score: 100
+      score: score.getScore(feedback.getAttempts())
     })
     newScore.save();
   })
