@@ -9,8 +9,9 @@ class PinPlacement extends Component {
       placement : ['','','',''],
       colorPool: [],
       display: false,
-      gameover: false ,
-      currentPin: 0
+      gameover: false,
+      currentPin: 0,
+      name: ''
     }
   }
 
@@ -54,11 +55,26 @@ class PinPlacement extends Component {
     window.location.reload();
   }
 
+  changeName = (e) => {
+    this.setState({name: e.target.value})
+  }
+
+  handlePost = (e) => {
+    this.context.socket.emit('newScore', {name: this.state.name})
+  }
+
   render() {
     return (
       <PlacementContainer onSubmit={this.handleSubmit} justify={this.state.gameover}>
         {this.state.gameover ? (
-          <Submit type="button" onClick={this.handleRestart}>Restart Game</Submit>
+          <Fragment>
+            <UpperContainer>
+              <Input type="text" placeholder="INSERT YOUR NAME" value={this.state.name} onChange={this.changeName} />
+              <Submit type="button" onClick={this.handlePost } radius="0px 8px 8px 0px">OK</Submit>
+            </UpperContainer>
+            <Submit type="button" onClick={this.handleRestart}>Restart Game</Submit>
+
+          </Fragment>
         )
         : (
           <Fragment>
@@ -133,7 +149,7 @@ const Submit = styled.button`
   height: 3em;
   padding:0 2em;
   border: 2px solid white;
-  border-radius: 8px;
+  border-radius: ${props => props.radius || '8px'};
   color: white;
   background-color: transparent;
   transition: 120ms all ease-in-out;
@@ -144,6 +160,18 @@ const Submit = styled.button`
     color: #1e88e5;
     border-color: #1e88e5;
   }
+`
+
+const Input = styled.input`
+  height: 3em;
+  padding:0 2em;
+  border: none;
+  border-radius: 8px 0px 0px 8px;
+  background-color: white;
+  color: #263238;
+  transition: 120ms all ease-in-out;
+  letter-spacing: 0.1em;
+  white-space: nowrap;
 `
 
 const ColorSelector = styled.button`

@@ -11,7 +11,7 @@
     "url": "git+https://github.com/OHFloree/react-mastermind.git"
   },
   "author": "Florian Müller",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/OHFloree/react-mastermind/issues"
   },
