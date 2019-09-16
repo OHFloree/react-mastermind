@@ -6,6 +6,10 @@ import {faTimes} from '@fortawesome/free-solid-svg-icons'
 
 class Menu extends Component {
 
+  handleRestart = (e) => {
+    window.location.reload();
+  }
+
   render() {
     return (
       <MenuContainer>
@@ -14,8 +18,8 @@ class Menu extends Component {
           <Icon icon={faTimes} size="lg" onClick={this.context.handlePause} />
         </MenuHead>
         <MenuBody>
-          <MenuButton>Resume</MenuButton>
-          <MenuButton>Restart</MenuButton>
+          <MenuButton onClick={this.context.handlePause}>Resume</MenuButton>
+          <MenuButton onClick={this.handleRestart}>Restart</MenuButton>
           <MenuButton>Rules</MenuButton>
           <MenuButton>Scoreboard</MenuButton>
         </MenuBody>
