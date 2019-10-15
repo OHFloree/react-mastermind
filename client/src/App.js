@@ -8,7 +8,6 @@ import Header from './components/header.js'
 import GameField from './components/gamefield.js'
 import PinPlacement from './components/placement.js'
 import Menu from './components/menu.js'
-import Scoreboard from './components/scoreboard.js'
 import Datenschutz from './components/datenschutz.js'
 import Impressum from './components/impressum.js'
 
@@ -18,7 +17,7 @@ class App extends Component {
     this.state = {
       pause: false,
       handlePause: this.handlePause,
-      socket: io.connect('localhost:8000')
+      socket: io.connect('mern-mastermind.herokuapp.com')
     }
   }
 
@@ -34,7 +33,6 @@ class App extends Component {
           <Wrapper>
             <Switch>
               <Route exact path="/" component={Game}/>
-              <Route path="/scoreboard" component={Scoreboard}/>
               <Route path="/impressum" component={Impressum}/>
               <Route path="/datenschutz" component={Datenschutz}/>
             </Switch>

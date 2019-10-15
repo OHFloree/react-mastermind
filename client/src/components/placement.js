@@ -55,25 +55,12 @@ class PinPlacement extends Component {
     window.location.reload();
   }
 
-  changeName = (e) => {
-    this.setState({name: e.target.value})
-  }
-
-  handlePost = (e) => {
-    this.context.socket.emit('newScore', {name: this.state.name})
-  }
-
   render() {
     return (
       <PlacementContainer onSubmit={this.handleSubmit} justify={this.state.gameover}>
         {this.state.gameover ? (
           <Fragment>
-            <UpperContainer>
-              <Input type="text" placeholder="INSERT YOUR NAME" value={this.state.name} onChange={this.changeName} />
-              <Submit type="button" onClick={this.handlePost } radius="0px 8px 8px 0px">OK</Submit>
-            </UpperContainer>
             <Submit type="button" onClick={this.handleRestart}>Restart Game</Submit>
-
           </Fragment>
         )
         : (
@@ -160,18 +147,6 @@ const Submit = styled.button`
     color: #1e88e5;
     border-color: #1e88e5;
   }
-`
-
-const Input = styled.input`
-  height: 3em;
-  padding:0 2em;
-  border: none;
-  border-radius: 8px 0px 0px 8px;
-  background-color: white;
-  color: #263238;
-  transition: 120ms all ease-in-out;
-  letter-spacing: 0.1em;
-  white-space: nowrap;
 `
 
 const ColorSelector = styled.button`
