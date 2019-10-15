@@ -28,12 +28,9 @@ io.on('connection', (socket) => {
 
   const feedbackService = require('./services/feedbackService')
   const feedback = new feedbackService(solution);
-  const scoreService = require('./services/ScoreService')
-  const score = new scoreService
 
   var gameover = false;
   let won = false;
-  let isTimerRunning = false;
   // Colors
   socket.emit('colors', {colorPool});
   // Placement
@@ -41,10 +38,6 @@ io.on('connection', (socket) => {
     let checked = feedback.checkPlacement(placement.placement);
     if (checked) {
       socket.emit('placementCb', null)
-      if (!isTimerRunning) {
-        score.startTimer()
-        isTimerRunning = true;
-      }
       counter +=1;
       if (counter<12) {
         let attempts = feedback.getAttempts(placement.placement);
@@ -55,9 +48,6 @@ io.on('connection', (socket) => {
       }
       else {
         gameover = true;
-        score.stopTimer(() => {
-          isTimerRunning = false;
-        })
       }
       if(gameover) {
         socket.emit('gameover', {solution, disabled: true, won})
