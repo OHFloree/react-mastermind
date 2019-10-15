@@ -21,7 +21,6 @@ class Menu extends Component {
           <MenuButton onClick={this.context.handlePause}>Resume</MenuButton>
           <MenuButton onClick={this.handleRestart}>Restart</MenuButton>
           <MenuButton>Rules</MenuButton>
-          <MenuButton>Scoreboard</MenuButton>
         </MenuBody>
       </MenuContainer>
     );

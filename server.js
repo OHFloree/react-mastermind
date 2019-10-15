@@ -1,25 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const app = express();
 const server = require('http').Server(app);
 const io = require('socket.io').listen(server);
 const path = require('path');
 const PORT = process.env.PORT || 8000;
-
-const db = require('./config/keys.js').mongoURI;
-mongoose.connect(db, {useNewUrlParser : true, useUnifiedTopology: true })
-  .then(() => {
-    console.log('DB Connected...')
-  })
-  .catch(err => console.log(err))
-
-const Score = require('./models/scoreModel.js')
-
-// @ GET api/score
-app.get('/api/scoreboard', (req,res) => {
-  Score.find()
-    .then(score => res.json(score));
-})
 
 if(process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
@@ -82,18 +66,5 @@ io.on('connection', (socket) => {
     else {
       socket.emit('invalid', 'Please select all four colors')
     }
-  })
-
-  // Scores
-  socket.on('score', () => {
-    let scoreboard = Score.find({})
-    .then(scoreboard => socket.emit('scoreCb', scoreboard))
-  })
-  socket.on('newScore', (data) => {
-    let newScore = new Score({
-      user: data.name,
-      score: score.getScore(feedback.getAttempts())
-    })
-    newScore.save();
   })
 })
