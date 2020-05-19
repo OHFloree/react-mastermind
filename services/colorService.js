@@ -1,4 +1,4 @@
-module.exports = class ColorService {
+ module.exports = class ColorService {
     constructor() {
         this.colors = [
             '#e53935',  //RED
@@ -10,11 +10,7 @@ module.exports = class ColorService {
         ]
     }
 
-    async getColors() {
+    async getAllColors() {
         return this.colors
-    }
-
-    async getColor(index) {
-        return this.colors[i]
     }
 }

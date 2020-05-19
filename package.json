@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "test": "jest --coverage",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -24,6 +25,7 @@
     "express-session": "^1.16.2"
   },
   "devDependencies": {
+    "jest": "^26.0.1",
     "nodemon": "^2.0.4"
   }
 }
