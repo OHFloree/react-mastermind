@@ -1,4 +1,6 @@
-export default class SolutionService {
+const ColorService = require('./colorService')
+
+module.exports = class SolutionService {
     async generateRandomSolution() {
 
     }
