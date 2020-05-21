@@ -2,17 +2,17 @@ const ColorService = require('./colorService')
 
 module.exports = class SolutionService {
     constructor() {
-        this.colorService = new ColorService
+        this.colorService = new ColorService()
     }
 
     async generateSolution() {
-        let solution = []
+        const solution = []
         const allColors = await this.colorService.getAllColors()
 
-        for(let i = 0; i<4;i++) {
-            let randomNum = await this.generateRandomNumber(allColors.length)
-            let randomColor = allColors[randomNum]
-            solution.push(randomColor)    
+        for (let i = 0; i < 4; i++) {
+            const randomNum = await this.generateRandomNumber(allColors.length)
+            const randomColor = allColors[randomNum]
+            solution.push(randomColor)
         }
 
         return solution
