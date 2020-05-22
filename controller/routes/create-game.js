@@ -7,7 +7,7 @@ module.exports = (app) => {
             const solution = await solutionService.generateSolution()
             req.session.solution = solution
             req.session.guesses = []
-            res.status(201).json(solution)
+            res.sendStatus(201)
         }
         catch (e) {
             res.status(404).json({
