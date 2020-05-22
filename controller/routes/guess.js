@@ -20,7 +20,8 @@ module.exports = (app) => {
                         ? solution
                         : null,
             })
-        } catch (e) {
+        }
+        catch (e) {
             res.status(404).json({
                 message: e,
             })
