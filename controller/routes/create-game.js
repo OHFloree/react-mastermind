@@ -1,18 +1,18 @@
 const SolutionService = require('../../services/solutionService.js')
 
-
 module.exports = (app) => {
-    app.get('/create-game', async (req,res) => {
+    app.get('/create-game', async (req, res) => {
         try {
-            const solutionService = new SolutionService
+            const solutionService = new SolutionService()
             const solution = await solutionService.generateSolution()
             req.session.solution = solution
-            res.sendStatus(201)
+            req.session.guesses = []
+            res.status(201).json(solution)
         }
-        catch(e) {
+        catch (e) {
             res.status(404).json({
-                message: e
+                message: e,
             })
         }
     })
-} 
+}
