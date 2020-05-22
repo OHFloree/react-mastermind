@@ -8,7 +8,8 @@ module.exports = (app) => {
             req.session.solution = solution
             req.session.guesses = []
             res.status(201).json(solution)
-        } catch (e) {
+        }
+        catch (e) {
             res.status(404).json({
                 message: e,
             })
