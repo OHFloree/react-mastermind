@@ -6,6 +6,5 @@ const sessionConfig = require('../config/session')
 module.exports.load = (app) => {
     app.use(session(sessionConfig(session)))
     app.use(bodyParser.json())
-
     app.use('/api', router)
 }
