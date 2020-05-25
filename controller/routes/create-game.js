@@ -1,16 +1,21 @@
-const SolutionService = require('../../services/solutionService.js')
+const SolutionService = require('../../services/solutionService')
+const ColorService = require('../../services/colorService')
 
 module.exports = (app) => {
     app.get('/create-game', async (req, res) => {
         try {
+            const colorService = new ColorService()
             const solutionService = new SolutionService()
             const solution = await solutionService.generateSolution()
             req.session.solution = solution
             req.session.guesses = []
-            res.sendStatus(201)
+            res.status(201).json({
+                colors: await colorService.getAllColors()
+            })
         }
         catch (e) {
-            res.status(404).json({
+            console.log(e)
+            res.status(500).json({
                 message: e,
             })
         }
