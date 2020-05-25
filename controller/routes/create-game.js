@@ -14,7 +14,8 @@ module.exports = (app) => {
             })
         }
         catch (e) {
-            res.status(404).json({
+            console.log(e)
+            res.status(500).json({
                 message: e,
             })
         }

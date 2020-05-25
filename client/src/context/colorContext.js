@@ -12,6 +12,4 @@ function ColorProvider({ children }) {
     )
 }
 
-const ColorConsumer = ColorContext.Consumer
-
 export { ColorProvider, ColorContext }

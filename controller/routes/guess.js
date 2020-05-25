@@ -12,8 +12,10 @@ module.exports = (app) => {
                 solution
             )
             res.json({
-                guess: guesses[guesses.length - 1],
-                feedback,
+                feedbackRow: {
+                    guess: guesses[guesses.length - 1],
+                    feedback,
+                },
                 gameState,
                 solution:
                     gameState === 'WON' || gameState === 'LOST'
@@ -22,7 +24,8 @@ module.exports = (app) => {
             })
         }
         catch (e) {
-            res.status(404).json({
+            console.log(e)
+            res.status(500).json({
                 message: e,
             })
         }

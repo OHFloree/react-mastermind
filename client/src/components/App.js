@@ -1,13 +1,16 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, Fragment } from 'react';
 import axios from 'axios'
 import { ColorContext } from '../context/colorContext'
+
+import Footer from './Footer'
+import GameField from './GameField'
 
 function App() {
   const { setColors } = useContext(ColorContext)
 
   useEffect(() => {
     const createGame = async () => {
-      let res = await axios.get('/create-game')
+      let res = await axios.get('/api/create-game')
       let { colors } = res.data
       setColors(colors)
     }
@@ -15,8 +18,10 @@ function App() {
   }, [])
 
   return (
-    <div>
-    </div>
+    <Fragment>
+      <GameField />
+      <Footer />
+    </Fragment>
   );
 }
 
