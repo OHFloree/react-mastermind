@@ -13,4 +13,8 @@ module.exports = class ColorService {
 	async getAllColors() {
 		return this.colors
 	}
+
+	getAllColorsSync() {
+		return this.colors
+	}
 }

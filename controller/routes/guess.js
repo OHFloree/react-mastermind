@@ -1,8 +1,17 @@
 const SolutionService = require('../../services/solutionService')
 const GuessService = require('../../services/guessService')
 
+const { validationRules, validateGuess } = require('../middleware/guessValidation')
+const { validateSession } = require('../middleware/sessionValidition')
+
+const middleware = [
+    validateSession,
+    validationRules(),
+    validateGuess
+]
+
 module.exports = (app) => {
-    app.post('/guess', async (req, res) => {
+    app.post('/guess', ...middleware, async (req, res) => {
         try {
             req.session.guesses = [...req.session.guesses, req.body.guess]
             const guessService = new GuessService()
@@ -24,7 +33,7 @@ module.exports = (app) => {
             })
         }
         catch (e) {
-            console.log(e)
+            console.error(e)
             res.status(500).json({
                 message: e,
             })
