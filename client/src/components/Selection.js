@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { ColorContext } from '../context/colorContext'
 import { FeedbackObjectContext } from '../context/feedbackObjectContext'
@@ -24,45 +24,43 @@ export default function Selection() {
     }
 
     return (
-        <Footer>
-            <Form onSubmit={handleSubmit} >
-                <SelectorList>
-                    {guess.map((guessField, i) => (
-                        <Selector key={i} index={i} value={guessField} handleChange={handleChange} colors={colors} />
-                    ))}
-                </SelectorList>
+        <Form onSubmit={handleSubmit} >
+            <Filler />
+            <SelectorList>
+                {guess.map((guessField, i) => (
+                    <Selector key={i} index={i} value={guessField} handleChange={handleChange} colors={colors} />
+                ))}
+            </SelectorList>
+            <Filler>
                 <Submit type="submit" >OK</Submit>
-            </Form >
-        </Footer>
+            </Filler>
+        </Form >
     )
 }
 
-const Footer = styled.div`
+const Form = styled.form`
     height: 30vh;
     width: 100%;
+    background-color: #263238;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
 `
 
-const Form = styled.form`
-    width: 50%;
+const SelectorList = styled.div`
+    flex: 2;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-evenly;
 `
 
-const SelectorList = styled.div`
-    width: 100%;
+const Filler = styled.div`
+    flex: 1;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-
 `
 
 const Submit = styled.button`
-    width: 40px;
-    height: 40px;
+    width: 100px;
+    height: 50px;
     border: none;
 `
 

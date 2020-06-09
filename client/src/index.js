@@ -4,14 +4,17 @@ import './index.css';
 import App from './components/App';
 import { ColorProvider } from './context/colorContext'
 import { FeedbackObjectProvider } from './context/feedbackObjectContext'
+import { SolutionProvider } from './context/solutionContext'
 
 ReactDOM.render(
   <React.StrictMode>
     <ColorProvider>
-      <FeedbackObjectProvider>
-        <App />
-      </FeedbackObjectProvider>
+      <SolutionProvider>
+        <FeedbackObjectProvider>
+          <App />
+        </FeedbackObjectProvider>
+      </SolutionProvider>
     </ColorProvider>
-  </React.StrictMode>,
+  </React.StrictMode >,
   document.getElementById('root')
 );
