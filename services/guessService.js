@@ -16,28 +16,22 @@ module.exports = class GuessService {
     }
 
     async determinateGamestate(guesses, solution) {
+        const guess = guesses[guesses.length - 1]
         if (guesses.length >= 10) {
             return 'LOST'
         }
-        if (await this.checkWin(guesses, solution)) {
+        if (await this.checkWin(guess, solution)) {
             return 'WON'
         }
         return 'PLAYING'
     }
 
-    async checkWin(guesses, solution) {
-        let flags = []
+    async checkWin(guess, solution) {
         for (let i = 0; i < solution.length; i++) {
-            if (guesses[i] === solution[i]) {
-                flags.push(true)
-            } else {
-                flags.push(false)
+            if (guess[i] !== solution[i]) {
+                return false
             }
         }
-
-        if (flags.length > 0 && !flags.includes(false)) {
-            return true
-        }
-        return false
+        return true
     }
 }

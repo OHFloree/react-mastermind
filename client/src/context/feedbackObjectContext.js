@@ -1,5 +1,6 @@
 import React, { createContext, useState, useContext } from 'react'
 import { ColorContext } from './colorContext'
+import { SolutionContext } from './solutionContext'
 import axios from 'axios'
 
 const FeedbackObjectContext = createContext()
@@ -7,6 +8,7 @@ const FeedbackObjectContext = createContext()
 function FeedbackObjectProvider({ children }) {
     const [feedbackObject, setfeedbackObject] = useState([])
     const { colors } = useContext(ColorContext)
+    const { setSolution } = useContext(SolutionContext)
 
     const makeGuess = async (guess) => {
         try {
@@ -14,6 +16,9 @@ function FeedbackObjectProvider({ children }) {
             let res = await axios.post('/api/guess', { guess })
             let { feedbackRow, gameState, solution } = res.data
             setfeedbackObject([...feedbackObject, feedbackRow])
+            if (gameState !== 'PLAYING') {
+                setSolution(solution)
+            }
         }
         catch (e) {
             alert(e)
@@ -22,10 +27,10 @@ function FeedbackObjectProvider({ children }) {
 
     const validateGuess = async (guess) => {
         if (!guess) {
-            throw `No values`
+            throw new Error('No values')
         }
         if (!guess.every(color => colors.includes(color))) {
-            throw `No valid values`
+            throw new Error('No valid values')
         }
         return
     }

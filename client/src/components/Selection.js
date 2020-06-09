@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import styled from 'styled-components'
 import { ColorContext } from '../context/colorContext'
 import { FeedbackObjectContext } from '../context/feedbackObjectContext'
@@ -10,11 +10,13 @@ export default function Selection() {
     const { colors } = useContext(ColorContext)
     const [guess, setGuess] = useState(['#000000', '#000000', '#000000', '#000000'])
     const [disabled, setDisabled] = useState(true)
+    const [activeElement, setActiveElement] = useState(-1)
 
     const handleChange = (value, index) => {
         const newGuess = [...guess]
         newGuess[index] = value
         setGuess(newGuess)
+        setActiveElement(-1)
         setDisabled(!newGuess.every(color => colors.includes(color)))
     }
 
@@ -23,46 +25,54 @@ export default function Selection() {
         e.preventDefault()
     }
 
+    const handleOpen = (i) => {
+        if (activeElement === i) {
+            setActiveElement(-1)
+            return
+        }
+        setActiveElement(i)
+    }
+
     return (
-        <Footer>
-            <Form onSubmit={handleSubmit} >
-                <SelectorList>
-                    {guess.map((guessField, i) => (
-                        <Selector key={i} index={i} value={guessField} handleChange={handleChange} colors={colors} />
-                    ))}
-                </SelectorList>
-                <Submit type="submit" >OK</Submit>
-            </Form >
-        </Footer>
+        <Form onSubmit={handleSubmit} >
+            <SelectorList>
+                {guess.map((guessField, i) => {
+                    return <Selector
+                        key={i}
+                        colors={colors}
+                        value={guessField}
+                        isOpen={activeElement === i ? true : false}
+                        index={i}
+                        handleChange={handleChange}
+                        handleOpen={() => handleOpen(i)}
+                    />
+                })}
+            </SelectorList>
+            <Submit type="submit" disabled={disabled}>SUBMIT</Submit>
+        </Form >
     )
 }
 
-const Footer = styled.div`
-    height: 30vh;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`
-
 const Form = styled.form`
-    width: 50%;
+    width: 100%;
+    background-color: #263238;
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
 `
 
 const SelectorList = styled.div`
     width: 100%;
+    padding: 2em 5em;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-
+    justify-content: space-between;
 `
 
 const Submit = styled.button`
-    width: 40px;
-    height: 40px;
+    height: 5rem;
     border: none;
+    background-color: #1e88e5;
+    color: white;
+    font-size: 1.2em;
+    letter-spacing: 0.1rem;
 `
 
