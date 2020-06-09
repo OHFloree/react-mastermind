@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, Fragment } from 'react';
+import React, { useEffect, useContext } from 'react';
 import axios from 'axios'
 import styled from 'styled-components'
 import { ColorContext } from '../context/colorContext'
@@ -17,7 +17,7 @@ function App() {
       setColors(colors)
     }
     createGame()
-  }, [])
+  }, [setColors])
 
   return (
     <Wrapper>

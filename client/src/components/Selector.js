@@ -1,22 +1,29 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 
-export default function Selector({ colors, value, handleChange, index }) {
-    const [isOpen, setIsOpen] = useState(false)
-
-    const open = () => {
-        setIsOpen(!isOpen)
+export default function Selector(
+    { colors,
+        value,
+        isOpen, index,
+        handleChange,
+        handleOpen
     }
+) {
 
-    const select = (color) => {
+    const select = (e, color) => {
+        e.stopPropagation()
         handleChange(color, index)
     }
 
     return (
-        <Select onClick={open} value={value} >
+        <Select onClick={handleOpen} value={value} isOpen={isOpen} >
             <OptionList isOpen={isOpen}>
                 {colors.map((color, i) => (
-                    <Option key={i} value={color} onClick={e => select(color)} ></Option>
+                    <Option
+                        key={i}
+                        value={color}
+                        onClick={e => select(e, color)}
+                    />
                 ))}
             </OptionList>
         </Select>
@@ -27,19 +34,16 @@ const Select = styled.div`
     width: 50px;
     height: 50px; 
     background-color: ${props => props.value};
-    border: 2px solid #4f5b62;
+    border: 2px solid ${props => props.isOpen ? 'yellow' : 'white'};
     border-radius: 25px;
     position: relative;
     transition: 150ms ease-in-out;
-    &&:hover {
-        border-color: yellow;
-    }
 `
 
 const OptionList = styled.ul`
     display: ${props => props.isOpen ? 'block' : 'none'};
     width: 100%;
-    border: 2px solid #4f5b62;
+    border: 2px solid white;
     border-radius: 25px;
     overflow: hidden;
     list-style-type: none;
@@ -55,14 +59,6 @@ const Option = styled.li`
     border: none;
     background-color: ${props => props.value};
     border: 2px solid ${props => props.value};
-    transition: 100ms ease-in;
-    &&: hover {
-        border 2px solid yellow;
-    }
-    &&:first-child {
-        border-radius: 25px 25px 0px 0px;
-    }
-    &&:last-child {
-        border-radius: 0px 0px 25px 25px;
-    }
+    transition: 100ms ease-in-out;
+
 `

@@ -27,8 +27,13 @@ const StyledRow = styled.div`
 `
 
 const Feedback = styled.div`
+    width: 50px;
+    height: 50px;
     margin: 0 auto;
     display: flex;
+    justify-content: space-between;
+    align-content: space-between;
+    flex-wrap: wrap;
 `
 
 const Guess = styled.div`

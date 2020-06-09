@@ -27,10 +27,10 @@ function FeedbackObjectProvider({ children }) {
 
     const validateGuess = async (guess) => {
         if (!guess) {
-            throw `No values`
+            throw new Error('No values')
         }
         if (!guess.every(color => colors.includes(color))) {
-            throw `No valid values`
+            throw new Error('No valid values')
         }
         return
     }
