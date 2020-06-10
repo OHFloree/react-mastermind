@@ -7,6 +7,7 @@ import { FeedbackObjectContext } from '../context/feedbackObjectContext'
 
 import Selection from './Selection'
 import Button from './Button'
+import Spinner from './Spinner'
 
 export default function Footer() {
     const { gameState } = useContext(GameStateContext)
@@ -30,7 +31,7 @@ export default function Footer() {
                 {gameState === 'PLAYING' ?
                     colors.length > 0 ?
                         <Selection guess={guess} setGuess={setGuess} /> :
-                        <GameState>loading...</GameState> :
+                        <Spinner /> :
                     <GameState>YOU {gameState}</GameState>
                 }
             </UpperFooter>
