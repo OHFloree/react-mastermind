@@ -1,32 +1,10 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+html, body, #root {
+  height: 100%;
+}
 
 * {
   margin: 0;
   padding: 0;
   outline: 0;
-  font-size: 16px;
-  font-family: 'Roboto', sans-serif;
-  color: white;
-}
-
-body {
-  background-color: #263238;
-  background-size: cover;
-  width: 100vw;
-}
-
-h1 {
-  padding: 1em 0;
-  font-size: 2em;
-}
-
-h2 {
-  margin-top: 1em;
-  font-size: 1.4em;
-}
-
-@media (max-width: 450px)  {
-  * {
-    font-size: 0.97em;
-  }
+  box-sizing: border-box;
 }

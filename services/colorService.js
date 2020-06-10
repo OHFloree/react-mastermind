@@ -1,28 +1,20 @@
-class ColorService {
-  constructor() {
-    this.solution = [];
-    this.colorPool = [
-      "#e53935",
-      "#1e88e5",
-      "#43a047",
-      "#fdd835",
-      "#ce93d8",
-      "#4dd0e1",
-      "#ffa000",
-      "#8e24aa"
-    ];
-  }
-  getSolution() {
-    let solution = [];
-    for(let i=0; i<4; i++) {
-      let color = Math.floor(Math.random() * this.colorPool.length);
-      solution[i] = this.colorPool[color]
-    }
-    return solution
-  }
-  getColors() {
-    return this.colorPool
-  }
-}
+module.exports = class ColorService {
+	constructor() {
+		this.colors = [
+			'#e53935', // RED
+			'#1e88e5', // BLUE
+			'#43a047', // GREEN
+			'#fdd835', // YELLOW
+			'#fb8c00', // ORANGE
+			'#8e24aa', // PURPLE
+		]
+	}
 
-module.exports = ColorService;
+	async getAllColors() {
+		return this.colors
+	}
+
+	getAllColorsSync() {
+		return this.colors
+	}
+}

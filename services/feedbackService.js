@@ -1,65 +1,42 @@
-class FeedbackService {
-  constructor(solution) {
-    this.solution = solution;
-    this.attempts = [];
-    this.feedback = [];
-  }
+module.exports = class FeedbackService {
+    async generateFeedback(guess, solution) {
+        const solutionCopy = solution.slice()
+        const guessCopy = guess.slice()
 
-  won(placement) {
-    let counter = 0;
-    for (let i = 0; i<this.solution.length; i++) {
-      if (this.solution[i] == placement[i]) {
-        counter ++;
-      }
-    }
-    if (counter == 4) {
-      return true
-    }
-    else {
-      return false
-    }
-  }
+        const correctPositions = await this.getCorrectPositions(
+            guessCopy,
+            solutionCopy
+        )
+        const correctColors = await this.getCorrectColors(
+            guessCopy,
+            solutionCopy
+        )
+        const feedback = [correctPositions, correctColors]
 
-  checkPlacement(placement) {
-    let checked = true;
-    for(let i = 0; i<placement.length;i++) {
-      if (placement[i] == '') {
-        checked =  false;
-      }
+        return feedback
     }
-    return checked
-  }
 
-  getAttempts(placement) {
-    this.attempts.push({placement})
-    return this.attempts;
-  }
+    async getCorrectPositions(guess, solution) {
+        let correctPositions = 0
+        solution.forEach((color, i) => {
+            if (guess[i] === color) {
+                correctPositions++
+                solution[i] = 'GUESSED'
+                guess[i] = 'USED'
+            }
+        })
 
-  getFeedback(userPlacement) {
-    let solution = this.solution.slice()
-    let placement = userPlacement.slice()
-    let correctPositions = 0
-    let correctColors = 0
-
-    for(let i = 0; i < this.solution.length; i++) {
-      if(solution[i] === placement[i]) {
-        solution[i] = placement[i] = null;
-        correctPositions ++;
-      }
+        return correctPositions
     }
-    for(let i = 0; i < this.solution.length; i++) {
-      for(let j = 0; j < this.solution.length; j++) {
-        if(solution[i] && placement[i]) {
-          if(placement[i] === solution[j]) {
-            solution[j] = placement[i] = null;
-            correctColors ++;
-          }
-        }
-      }
+
+    async getCorrectColors(guess, solution) {
+        let correctColors = 0
+        solution.forEach((color, i) => {
+            if (guess.includes(color)) {
+                correctColors++
+            }
+        })
+
+        return correctColors
     }
-    this.feedback.push([correctPositions, correctColors])
-    return this.feedback
-  }
 }
-
-module.exports = FeedbackService;
