@@ -17,11 +17,11 @@ module.exports = class GuessService {
 
     async determinateGamestate(guesses, solution) {
         const guess = guesses[guesses.length - 1]
-        if (guesses.length >= 10) {
-            return 'LOST'
-        }
         if (await this.checkWin(guess, solution)) {
             return 'WON'
+        }
+        if (guesses.length >= 10) {
+            return 'LOST'
         }
         return 'PLAYING'
     }

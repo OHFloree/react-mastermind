@@ -5,14 +5,17 @@ import App from './components/App';
 import { ColorProvider } from './context/colorContext'
 import { FeedbackObjectProvider } from './context/feedbackObjectContext'
 import { SolutionProvider } from './context/solutionContext'
+import { GameStateProvider } from './context/gameStateContext'
 
 ReactDOM.render(
   <React.StrictMode>
     <ColorProvider>
       <SolutionProvider>
-        <FeedbackObjectProvider>
-          <App />
-        </FeedbackObjectProvider>
+        <GameStateProvider>
+          <FeedbackObjectProvider>
+            <App />
+          </FeedbackObjectProvider>
+        </GameStateProvider>
       </SolutionProvider>
     </ColorProvider>
   </React.StrictMode >,

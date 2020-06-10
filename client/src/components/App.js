@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { ColorContext } from '../context/colorContext'
 
 import Solution from './Solution'
-import Selection from './Selection'
+import Footer from './Footer'
 import GameField from './GameField'
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
     <Wrapper>
       <Solution />
       <GameField />
-      <Selection />
+      <Footer />
     </Wrapper>
   );
 }

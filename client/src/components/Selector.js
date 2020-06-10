@@ -31,11 +31,11 @@ export default function Selector(
 }
 
 const Select = styled.div`
-    width: 50px;
-    height: 50px; 
+    width: 3rem;
+    height: 3rem; 
     background-color: ${props => props.value};
     border: 2px solid ${props => props.isOpen ? 'yellow' : 'white'};
-    border-radius: 25px;
+    border-radius: 1.5rem;
     position: relative;
     transition: 150ms ease-in-out;
 `
@@ -44,7 +44,7 @@ const OptionList = styled.ul`
     display: ${props => props.isOpen ? 'block' : 'none'};
     width: 100%;
     border: 2px solid white;
-    border-radius: 25px;
+    border-radius: 1.5rem;
     overflow: hidden;
     list-style-type: none;
     position: absolute;
@@ -55,7 +55,7 @@ const OptionList = styled.ul`
 
 const Option = styled.li`
     width: 100%;
-    height: 50px;
+    height: 3rem;
     border: none;
     background-color: ${props => props.value};
     border: 2px solid ${props => props.value};
