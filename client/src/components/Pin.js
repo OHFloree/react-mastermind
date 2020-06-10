@@ -13,17 +13,17 @@ const renderFbPins = (fb) => {
 }
 
 const Pin = styled.div`
-    height: 50px;
-    width: 50px;
+    height: 3rem;
+    width: 3rem;
     border: 2px solid white;
-    border-radius: 25px;
+    border-radius: 1.5rem;
     background-color: ${props => props.color};
 `
 
 const FeedbackPin = styled.div`
-    width: 20px;
-    height: 20px;
-    border-radius: 10px;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 0.625rem;
     background-color: ${props => props.color};
 `
 
