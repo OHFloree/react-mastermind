@@ -1,9 +1,10 @@
-import React, { useEffect, useContext, Fragment } from 'react';
+import React, { useEffect, useContext } from 'react';
 import axios from 'axios'
 import styled from 'styled-components'
 import { ColorContext } from '../context/colorContext'
 
-import Selection from './Selection'
+import Solution from './Solution'
+import Footer from './Footer'
 import GameField from './GameField'
 
 function App() {
@@ -16,17 +17,19 @@ function App() {
       setColors(colors)
     }
     createGame()
-  }, [])
+  }, [setColors])
 
   return (
     <Wrapper>
+      <Solution />
       <GameField />
-      <Selection />
+      <Footer />
     </Wrapper>
   );
 }
 
 const Wrapper = styled.div`
+  background-color: #37474f;
   display: flex;
   flex-direction: column;
   width: 100%;
